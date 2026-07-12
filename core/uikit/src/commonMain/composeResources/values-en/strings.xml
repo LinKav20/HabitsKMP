@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="input_field_clear_button">Clear input</string>
+    <string name="phone_input_field_country">Flag of country</string>
+    <string name="phone_input_field_drop_down_arrow">Show list of countries</string>
+
+    <string name="close">Close</string>
+
+    <string name="search_placeholder_top_bar">Search by resources or sections</string>
+
+    <string name="choose_emoji_title">Choose emoji</string>
+
+    <!-- Errors -->
+    <string name="error_not_found_title">Page not found</string>
+    <string name="error_server_title">Server error</string>
+    <string name="error_connection_title">Connection problem</string>
+    <string name="error_timeout_title">The waiting time has expired</string>
+    <string name="error_unknown_title">Something went wrong</string>
+
+    <string name="error_not_found_subtitle">It looks like this page is missing or has been deleted</string>
+    <string name="error_server_subtitle">Something went wrong and server is not responding. This may be a temporary glitch. Try:\n• Restart the app\n• Check your internet connection\n• Come later</string>
+    <string name="error_connection_subtitle">It looks like the application can't connect to the server. Check the Internet Connection or try again</string>
+    <string name="error_timeout_subtitle">The server is taking too long to respond. Try restarting the app or try it in later</string>
+    <string name="error_unknown_subtitle">An unknown error has occurred. Try restarting the app or try it in later</string>
+
+    <string name="error_restart_button">Restart</string>
+    <string name="error_return_to_main_button">Return to the main screen</string>
+
+    <string name="tag_in_progress_course">In progress</string>
+    <string name="tag_passed_course">Passed</string>
+    <string name="tag_not_started_course">Not started</string>
+    <string name="tag_required_course">Necessary</string>
+    <string name="tag_new_course">New</string>
+
+    <string name="date_picker_dialog_title_full">Select date</string>
+    <string name="date_picker_dialog_title_day">Select day</string>
+    <string name="date_picker_accept">Accept</string>
+    <string name="date_picker_cancel">Cancel</string>
+
+    <string name="monday_abbr">mon</string>
+    <string name="tuesday_abbr">tue</string>
+    <string name="wednesday_abbr">wed</string>
+    <string name="thursday_abbr">thu</string>
+    <string name="friday_abbr">fri</string>
+    <string name="saturday_abbr">sat</string>
+    <string name="sunday_abbr">sun</string>
+</resources>

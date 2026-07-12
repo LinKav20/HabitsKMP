@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_tab_courses">Курсы</string>
+    <string name="nav_tab_knowledge_base">БЗ</string>
+    <string name="nav_tab_events">События</string>
+    <string name="nav_tab_profile">Профиль</string>
+
+    <string name="debug_notification_title">Дебаг меню</string>
+    <string name="debug_notification_subtitle">Текущее окружение: %1$s\nНажмите чтобы открыть</string>
+    <string name="stage_value">STAGE</string>
+    <string name="prod_value">PROD</string>
+</resources>

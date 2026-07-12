@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="today_title">Сегодня, %1$s</string>
+    <string name="yesterday_title">Вчера, %1$s</string>
+    <string name="tomorrow_title">Завтра, %1$s</string>
+
+    <string name="today_tasks_title">Сегодня</string>
+    <string name="tomorrow_tasks_title">Завтра</string>
+    <string name="later_tasks_title">Потом</string>
+
+    <plurals name="simple_todo_days_until_deadline">
+        <item quantity="zero">Дедлайн сегодня</item>
+        <item quantity="one">%1$d день до дедлайна</item>
+        <item quantity="few">%1$d дня до дедлайна</item>
+        <item quantity="many">%1$d дней до дедлайна</item>
+        <item quantity="other">%1$d дней до дедлайна</item>
+    </plurals>
+
+    <string name="add_habit_title">Новое задание</string>
+    <string name="add_habit_todo_tab_title">Дело</string>
+    <string name="add_habit_habit_tab_title">Привычка</string>
+    <string name="add_habit_repeat_days_title">Дни повторения</string>
+    <string name="add_habit_endless_title">Бесконечная привычка</string>
+    <string name="add_habit_habit_title_placeholder">Название привычки</string>
+    <string name="add_habit_endless_days_until_end">Дней до конца</string>
+    <string name="add_habit_endless_days_until_end_placeholder">Дней до конца</string>
+    <string name="add_habit_endless_completion_day">День окончания</string>
+    <string name="add_habit_create_button">Создать</string>
+
+    <string name="add_habit_todo_title_placeholder">Название дела</string>
+    <string name="add_habit_todo_deadline_title">Дедлайн</string>
+    <string name="add_habit_todo_regular_title">Регулярное</string>
+    <string name="add_habit_todo_start_day_title">День начала</string>
+    <string name="add_habit_todo_regular_weekly">Еженедельно</string>
+    <string name="add_habit_todo_regular_monthly">Ежемесячно</string>
+    <string name="add_habit_todo_regular_yearly">Ежегодно</string>
+    <string name="add_habit_todo_start_day_subtitle">Задание будет запланировано на выбранный день. В случае невыполнения, оно будет перенесено на следующий день до истечения крайнего срока или завершения</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="input_field_clear_button">Очистить поле ввода</string>
+    <string name="phone_input_field_country">Флаг страны</string>
+    <string name="phone_input_field_drop_down_arrow">Показать список стран</string>
+
+    <string name="close">Закрыть</string>
+
+    <string name="search_placeholder_top_bar">Поиск по ресурсам или разделам</string>
+
+    <string name="choose_emoji_title">Выберите эмодзи</string>
+
+    <!-- Errors -->
+    <string name="error_not_found_title">Страница не найдена</string>
+    <string name="error_server_title">Ошибка сервера</string>
+    <string name="error_connection_title">Проблема с подключением</string>
+    <string name="error_timeout_title">Истекло время ожидания</string>
+    <string name="error_unknown_title">Что-то пошло не так</string>
+
+    <string name="error_not_found_subtitle">Похоже, этой страницы нет или она была удалена</string>
+    <string name="error_server_subtitle">Что-то пошло не так, и сервер не отвечает. Возможно, это временный сбой. Попробуй:\n• Перезапустить приложение\n• Проверить подключение к интернету\n• Зайти позже</string>
+    <string name="error_connection_subtitle">Похоже, приложение не может подключиться к серверу. Проверь интернет или попробуй снова</string>
+    <string name="error_timeout_subtitle">Сервер слишком долго не отвечает. Попробуй перезапустить приложение или зайти позже</string>
+    <string name="error_unknown_subtitle">Произошла неизвестная ошибка. Попробуй перезапустить приложение или зайти позже</string>
+
+    <string name="error_restart_button">Перезагрузить</string>
+    <string name="error_return_to_main_button">Вернуться на главный экран</string>
+
+    <string name="tag_in_progress_course">В процессе</string>
+    <string name="tag_passed_course">Пройден</string>
+    <string name="tag_not_started_course">Не начат</string>
+    <string name="tag_required_course">Обязательный</string>
+    <string name="tag_new_course">Новый</string>
+
+    <string name="date_picker_dialog_title_full">Выберите дату</string>
+    <string name="date_picker_dialog_title_day">Выберите день</string>
+    <string name="date_picker_accept">Принять</string>
+    <string name="date_picker_cancel">Отменить</string>
+
+    <string name="monday_abbr">пн</string>
+    <string name="tuesday_abbr">вт</string>
+    <string name="wednesday_abbr">ср</string>
+    <string name="thursday_abbr">чт</string>
+    <string name="friday_abbr">пт</string>
+    <string name="saturday_abbr">сб</string>
+    <string name="sunday_abbr">вс</string>
+</resources>

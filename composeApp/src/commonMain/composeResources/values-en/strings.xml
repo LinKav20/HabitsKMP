@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_tab_courses">Courses</string>
+    <string name="nav_tab_knowledge_base">KB</string>
+    <string name="nav_tab_events">Events</string>
+    <string name="nav_tab_profile">Profile</string>
+
+    <string name="debug_notification_title">Debug menu</string>
+    <string name="debug_notification_subtitle">Current environment: %1$s\nTap to open</string>
+    <string name="stage_value">STAGE</string>
+    <string name="prod_value">PROD</string>
+</resources>

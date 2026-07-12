@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="restart_app_title">App needs to restart</string>
+    <string name="restart_app_subtitle">The application needs to restart to apply changes. Please exit from app and launch after that.</string>
+    <string name="okay_button">Ok</string>
+
+    <string name="change_language_title">Do you want to change the app language?</string>
+    <string name="change_language_text">You can change the app language in your device settings</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="edit_button">Change</string>
+
+    <string name="january_full">January</string>
+    <string name="february_full">February</string>
+    <string name="march_full">March</string>
+    <string name="april_full">April</string>
+    <string name="may_full">May</string>
+    <string name="june_full">June</string>
+    <string name="july_full">July</string>
+    <string name="august_full">August</string>
+    <string name="september_full">September</string>
+    <string name="october_full">October</string>
+    <string name="november_full">November</string>
+    <string name="december_full">December</string>
+</resources>

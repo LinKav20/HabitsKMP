@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="restart_app_title">Приложение необходимо перезапустить</string>
+    <string name="restart_app_subtitle">Для применения изменений приложение необходимо перезапустить. Пожалуйста, закройте приложение и запустите заново.</string>
+    <string name="okay_button">Оk</string>
+
+    <string name="change_language_title">Хотите изменить язык приложения?</string>
+    <string name="change_language_text">Язык приложения можно изменить в настройках устройства</string>
+    <string name="cancel_button">Отменить</string>
+    <string name="edit_button">Изменить</string>
+
+    <string name="january_full">Январь</string>
+    <string name="february_full">Февраль</string>
+    <string name="march_full">Март</string>
+    <string name="april_full">Апрель</string>
+    <string name="may_full">Май</string>
+    <string name="june_full">Июнь</string>
+    <string name="july_full">Июль</string>
+    <string name="august_full">Август</string>
+    <string name="september_full">Сентрябрь</string>
+    <string name="october_full">Октябрь</string>
+    <string name="november_full">Ноябрь</string>
+    <string name="december_full">Декабрь</string>
+</resources>

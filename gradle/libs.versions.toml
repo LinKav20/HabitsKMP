@@ -1,0 +1,216 @@
+[versions]
+agp = "9.0.1"
+android-minSdk = "26"
+android-compileSdk = "36"
+android-targetSdk = "36"
+animation = "1.10.5"
+emojiKt = "2.3.0"
+imageLoaderExtensionComposeResources = "1.10.0"
+androidx-activityCompose = "1.12.4"
+androidx-appcompat = "1.7.1"
+compose-icons-extended = "1.7.3"
+androidx-core = "1.17.0"
+androidx-annotation = "1.9.1"
+jetbrains-lifecycle = "2.9.6"
+androidx-material = "1.13.0"
+compose-multiplatform = "1.10.1"
+junit = "4.13.2"
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.10.0"
+kotlinx-datetime = "0.7.1"
+kotlinxCollectionsImmutable = "0.4.0"
+ktor = "3.3.3"
+kotlin = "2.3.10"
+ktorfit = "2.7.2"
+ktorfit-compiler = "2.3.3"
+google-ksp = "2.3.5"
+detekt = "1.23.8"
+compose-rules = "0.4.26"
+ktlint = "1.7.1"
+manifestGuard = "1.2.0"
+koin = "4.1.1"
+koinAnnotationBom = "2.3.1"
+essenty = "2.5.0"
+decompose = "3.4.0"
+media3Exoplayer = "1.9.2"
+mvi = "4.3.0"
+datastore = "1.2.0"
+okhttp = "5.3.2"
+splittiesAppContext = "3.0.0"
+coilCompose = "3.4.0"
+filekit = "0.13.0"
+krop = "0.2.0"
+lifecycleAndroid = "2.10.0"
+zoomable = "2.11.1"
+ktxml = "1.0.0"
+room = "2.8.4"
+sqlite = "2.6.2"
+pdfview = "2.3.7"
+webview = "2.0.3"
+flipper = "0.273.0"
+flipperSoLoader = "0.12.1"
+sentry = "6.0.0"
+sentry-multiplatfrom = "0.24.0"
+compottie = "2.0.3"
+splashscreen = "1.2.0"
+kotlinpoet = "2.2.0"
+firebase-messaging = "25.0.1"
+google-services = "4.4.4"
+
+[libraries]
+image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoaderExtensionComposeResources" }
+image-loader-extension-compose-resources = { module = "io.github.qdsfdhvh:image-loader-extension-compose-resources", version.ref = "imageLoaderExtensionComposeResources" }
+image-loader-extension-moko-resources = { module = "io.github.qdsfdhvh:image-loader-extension-moko-resources", version.ref = "imageLoaderExtensionComposeResources" }
+insert-koin-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
+androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
+androidx-material-compose-icons = { group = "org.jetbrains.compose.material", name = "material-icons-extended", version.ref = "compose-icons-extended" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "jetbrains-lifecycle" }
+androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "jetbrains-lifecycle" }
+jetbrains-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "jetbrains-lifecycle" }
+components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
+
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-engine-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-engine-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor-client-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+facebook-flipper-network = { group = "com.facebook.flipper", name = "flipper-network-plugin", version.ref = "flipper" }
+facebook-flipper-core = { group = "com.facebook.flipper", name = "flipper", version.ref = "flipper" }
+facebook-flipper-soloader = { group = "com.facebook.soloader", name = "soloader", version.ref = "flipperSoLoader" }
+
+ktorfit = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib-light", version.ref = "ktorfit" }
+
+gradleplugins-api = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
+gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+gradleplugins-ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "google-ksp" }
+gradleplugins-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradleplugins-kotlinxSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+gradleplugins-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
+gradleplugins-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+gradleplugins-detekt = { module = "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "detekt" }
+
+detektPlugin-nlopez-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "compose-rules" }
+
+ktlint-cli = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
+
+essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
+essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty" }
+essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
+essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
+essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
+
+decompose-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensionsCompose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
+decompose-extensionsComposeExpiremental = { group = "com.arkivanov.decompose", name = "extensions-compose-experimental", version.ref = "decompose" }
+
+mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mvi" }
+mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvi" }
+mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "mvi" }
+mvikotlin-timetravel = { module = "com.arkivanov.mvikotlin:mvikotlin-timetravel", version.ref = "mvi" }
+mvikotlin-extensions-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvi" }
+
+emoji-compose-m3 = { module = "org.kodein.emoji:emoji-compose-m3", version.ref = "emojiKt" }
+emoji-kt = { module = "org.kodein.emoji:emoji-kt", version.ref = "emojiKt" }
+
+#koin
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-android = { module = "io.insert-koin:koin-android" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-annotations-bom = { module = "io.insert-koin:koin-annotations-bom", version.ref = "koinAnnotationBom" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotationBom" }
+
+#coil
+coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilCompose" }
+coil-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilCompose" }
+
+#datastore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
+okhttp = { module = "com.squareup.okhttp3:okhttp" }
+splitties-appcontext = { group = "com.louiscad.splitties", name = "splitties-appctx", version.ref = "splittiesAppContext" }
+
+filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
+filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
+filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleAndroid" }
+androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "media3Exoplayer" }
+zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
+ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
+pdf-viewer = { module = "io.github.afreakyelf:Pdf-Viewer", version.ref = "pdfview" }
+
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
+
+krop-core = { module = "com.attafitamim.krop:core", version.ref = "krop" }
+krop-ui = { module = "com.attafitamim.krop:ui", version.ref = "krop" }
+
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "webview" }
+
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebase-messaging" }
+
+#database
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+
+jetbrains-compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+jetbrains-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+
+ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
+
+room = { id = "androidx.room", version.ref = "room" }
+
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+manifestGuard = { id = "com.dpforge.manifestguard", version.ref = "manifestGuard" }
+
+## Gradle scripts from the project
+main-detekt = { id = "ru.template.detekt" }
+main-ktlint = { id = "ru.template.ktlint" }
+
+main-compose-ios = { id = "ru.template.jetbrains-compose.ios" }
+main-compose = { id = "ru.template.jetbrains-compose.all" }
+main-feature-impl = { id = "ru.template.kmp.feature.impl" }
+main-feature-api = { id = "ru.template.kmp.feature.api" }
+main-compose-jetpack-base = { id = "ru.template.jetpack-compose.base" }
+
+main-kmplib-ios = { id = "ru.template.kmp.library.ios" }
+main-kmplib = { id = "ru.template.kmp.library.all" }

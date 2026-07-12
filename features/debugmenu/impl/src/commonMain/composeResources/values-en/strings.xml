@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="debug_menu_title">Debug menu</string>
+    <string name="prod_value">PROD</string>
+    <string name="stage_value">STAGE</string>
+    <string name="os_version_title">OS version: </string>
+    <string name="device_id_title">Device ID: </string>
+    <string name="token_title">Token: </string>
+    <string name="reset_token_config_title">Clear token</string>
+</resources>

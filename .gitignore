@@ -1,0 +1,28 @@
+*.iml
+.kotlin/
+.gradle/
+.venv
+xcuserdata
+!src/**/build/
+local.properties
+.idea/
+captures
+.externalNativeBuild
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+build/
+/iosApp/iosApp.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+#config
+.gitconfig
+
+# OS-specific files
+.DS_Store
+
+# Claude Code local settings
+.claude/

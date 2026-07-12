@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="today_title">Today, %1$s</string>
+    <string name="yesterday_title">Yesterday, %1$s</string>
+    <string name="tomorrow_title">Tomorrow, %1$s</string>
+
+    <string name="today_tasks_title">Today</string>
+    <string name="tomorrow_tasks_title">Tomorrow</string>
+    <string name="later_tasks_title">Later</string>
+
+    <plurals name="simple_todo_days_until_deadline">
+        <item quantity="zero">Today is deadline</item>
+        <item quantity="one">%1$d day until deadline</item>
+        <item quantity="few">%1$d days until deadline</item>
+        <item quantity="many">%1$d days until deadline</item>
+        <item quantity="other">%1$d days until deadline</item>
+    </plurals>
+
+    <string name="add_habit_title">New task</string>
+    <string name="add_habit_todo_tab_title">Todo</string>
+    <string name="add_habit_habit_tab_title">Habit</string>
+    <string name="add_habit_repeat_days_title">Repeat days</string>
+    <string name="add_habit_endless_title">Endless habit</string>
+    <string name="add_habit_habit_title_placeholder">Name of habit</string>
+    <string name="add_habit_endless_days_until_end">Days until end</string>
+    <string name="add_habit_endless_days_until_end_placeholder">Days until end</string>
+    <string name="add_habit_endless_completion_day">Completion day</string>
+    <string name="add_habit_create_button">Create</string>
+
+    <string name="add_habit_todo_title_placeholder">Name of todo</string>
+    <string name="add_habit_todo_deadline_title">Deadline</string>
+    <string name="add_habit_todo_regular_title">Regular</string>
+    <string name="add_habit_todo_start_day_title">Start day</string>
+    <string name="add_habit_todo_regular_weekly">Weekly</string>
+    <string name="add_habit_todo_regular_monthly">Monthly</string>
+    <string name="add_habit_todo_regular_yearly">Yearly</string>
+    <string name="add_habit_todo_start_day_subtitle">The task will be scheduled for the selected day. In case of non-fulfillment, it will be postponed to the next day before the deadline or completion</string>
+</resources>

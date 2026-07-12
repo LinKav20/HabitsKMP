@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="debug_menu_title">Дебаг меню</string>
+    <string name="prod_value">PROD</string>
+    <string name="stage_value">STAGE</string>
+    <string name="os_version_title">Версия ОС: </string>
+    <string name="device_id_title">ID устройства: </string>
+    <string name="token_title">Токен: </string>
+    <string name="reset_token_config_title">Очистить токен</string>
+</resources>

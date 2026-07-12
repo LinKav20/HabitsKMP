@@ -1,0 +1,131 @@
+package com.github.linkav20.habits.core.uikit.components.datetimewheelpicker.core.format
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.intl.Locale
+import com.github.linkav20.habits.core.uikit.components.datetimewheelpicker.strings.EnStrings
+import com.github.linkav20.habits.core.uikit.components.datetimewheelpicker.strings.Strings
+import kotlinx.datetime.Month
+import kotlinx.datetime.number
+
+@Stable
+interface DateFormatter {
+    val dateOrder: DateOrder
+    val monthDisplayStyle: MonthDisplayStyle
+    val cjkSuffixConfig: CjkSuffixConfig
+    val formatYear: (Int) -> String
+    val formatMonth: (Month, MonthDisplayStyle) -> String
+    val formatDay: (Int) -> String
+}
+
+fun DateFormatter.formatMonth(month: Month) = formatMonth(month, monthDisplayStyle)
+
+private class DateFormatterImpl(
+    override val dateOrder: DateOrder,
+    override val monthDisplayStyle: MonthDisplayStyle,
+    override val cjkSuffixConfig: CjkSuffixConfig,
+    override val formatYear: (Int) -> String,
+    override val formatMonth: (Month, MonthDisplayStyle) -> String,
+    override val formatDay: (Int) -> String
+) : DateFormatter
+
+fun dateFormatter(
+    dateOrder: DateOrder = DateOrder.DMY,
+    monthDisplayStyle: MonthDisplayStyle = MonthDisplayStyle.FULL,
+    cjkSuffixConfig: CjkSuffixConfig = CjkSuffixConfig.ShowAll,
+    formatYear: (Int) -> String = { it.toLocalizedNumerals() },
+    formatMonth: (Month, MonthDisplayStyle) -> String = { month, style ->
+        val strings = EnStrings
+        when (style) {
+            MonthDisplayStyle.FULL -> month.fullString(strings)
+            MonthDisplayStyle.SHORT -> month.shortString(strings)
+            MonthDisplayStyle.NUMERIC -> month.number.toLocalizedNumerals(strings)
+        }
+    },
+    formatDay: (Int) -> String = { it.toLocalizedNumerals() }
+): DateFormatter = DateFormatterImpl(
+    dateOrder = dateOrder,
+    monthDisplayStyle = monthDisplayStyle,
+    cjkSuffixConfig = cjkSuffixConfig,
+    formatYear = formatYear,
+    formatMonth = formatMonth,
+    formatDay = formatDay,
+)
+
+internal fun dateFormatter(
+    strings: Strings,
+    dateOrder: DateOrder = DateOrder.DMY,
+    monthDisplayStyle: MonthDisplayStyle = MonthDisplayStyle.FULL,
+    cjkSuffixConfig: CjkSuffixConfig = CjkSuffixConfig.ShowAll,
+    formatYear: (Int) -> String = { it.toLocalizedNumerals(strings) },
+    formatMonth: (Month, MonthDisplayStyle) -> String = { month, style ->
+        when (style) {
+            MonthDisplayStyle.FULL -> month.fullString(strings)
+            MonthDisplayStyle.SHORT -> month.shortString(strings)
+            MonthDisplayStyle.NUMERIC -> month.number.toLocalizedNumerals(strings)
+        }
+    },
+    formatDay: (Int) -> String = { it.toLocalizedNumerals(strings) }
+): DateFormatter = DateFormatterImpl(
+    dateOrder = dateOrder,
+    monthDisplayStyle = monthDisplayStyle,
+    cjkSuffixConfig = cjkSuffixConfig,
+    formatYear = formatYear,
+    formatMonth = formatMonth,
+    formatDay = formatDay,
+)
+
+@Composable
+fun dateFormatter(
+    locale: Locale,
+    monthDisplayStyle: MonthDisplayStyle,
+    cjkSuffixConfig: CjkSuffixConfig
+): DateFormatter {
+    val lyricist = rememberStrings(currentLanguageTag = locale.language)
+
+    return remember(lyricist, locale, monthDisplayStyle, cjkSuffixConfig) {
+        dateFormatter(
+            strings = lyricist,
+            dateOrder = DateOrder.Companion.match(locale),
+            monthDisplayStyle = monthDisplayStyle,
+            cjkSuffixConfig = cjkSuffixConfig,
+        )
+    }
+}
+
+internal fun Month.fullString(strings: Strings): String {
+    return when (number) {
+        1 -> strings.monthJanuaryFull
+        2 -> strings.monthFebruaryFull
+        3 -> strings.monthMarchFull
+        4 -> strings.monthAprilFull
+        5 -> strings.monthMayFull
+        6 -> strings.monthJuneFull
+        7 -> strings.monthJulyFull
+        8 -> strings.monthAugustFull
+        9 -> strings.monthSeptemberFull
+        10 -> strings.monthOctoberFull
+        11 -> strings.monthNovemberFull
+        12 -> strings.monthDecemberFull
+        else -> error("Invalid month number: $number")
+    }
+}
+
+internal fun Month.shortString(strings: Strings): String {
+    return when (number) {
+        1 -> strings.monthJanuaryShort
+        2 -> strings.monthFebruaryShort
+        3 -> strings.monthMarchShort
+        4 -> strings.monthAprilShort
+        5 -> strings.monthMayShort
+        6 -> strings.monthJuneShort
+        7 -> strings.monthJulyShort
+        8 -> strings.monthAugustShort
+        9 -> strings.monthSeptemberShort
+        10 -> strings.monthOctoberShort
+        11 -> strings.monthNovemberShort
+        12 -> strings.monthDecemberShort
+        else -> error("Invalid month number: $number")
+    }
+}
