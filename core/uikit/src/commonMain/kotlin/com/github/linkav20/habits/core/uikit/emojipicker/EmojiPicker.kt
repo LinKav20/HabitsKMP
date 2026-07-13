@@ -28,8 +28,6 @@ import com.github.linkav20.habits.core.uikit.resources.Res
 import com.github.linkav20.habits.core.uikit.resources.choose_emoji_title
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.emoji.Emoji
-import org.kodein.emoji.allGroups
-import org.kodein.emoji.allOf
 import org.kodein.emoji.list
 
 @Composable

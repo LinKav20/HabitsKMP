@@ -23,11 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.github.linkav20.habits.core.uikit.HabitIcons
+import com.github.linkav20.habits.core.uikit.HabitImages
 import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
 import com.github.linkav20.habits.core.uikit.components.button.HabitButtonSize
@@ -120,7 +122,10 @@ fun TasksSheetContent(
                     is TasksItem.Empty ->
                         EmptyBlock(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp).animateItem(),
+                                .padding(
+                                    horizontal = 12.dp,
+                                    vertical = 20.dp,
+                                ).animateItem(),
                         )
 
                     TasksItem.RateDay -> {
@@ -255,20 +260,21 @@ private fun EmptyBlock(
             .padding(vertical = 12.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        Text(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp),
-            text = "У вас нет никаких запланированных дел и привычек",
-            color = HabitTheme.colors.textPrimary,
-            style = HabitTheme.typography.subtitle,
-            textAlign = TextAlign.Center,
+        Icon(
+            modifier = Modifier.size(140.dp),
+            painter = painterResource(HabitImages.EmptyList),
+            contentDescription = null,
+            tint = Color.Unspecified,
         )
         Text(
             modifier = Modifier.fillMaxSize().padding(horizontal = 18.dp),
-            text = "Вы можете запланировать их",
+            text = "На этот день нет планов",
             color = HabitTheme.colors.textSecondary,
-            style = HabitTheme.typography.body,
+            style = HabitTheme.typography.body.copy(
+                fontStyle = FontStyle.Italic,
+            ),
             textAlign = TextAlign.Center,
         )
     }
