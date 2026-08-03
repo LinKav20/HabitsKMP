@@ -8,29 +8,25 @@ internal class MainReducer : Reducer<MainStore.State, MainMessage> {
         return when (msg) {
             is MainMessage.ChangeSelectedDate -> copy(
                 selectedDate = msg.selectedDate,
-                tasks = msg.tasks,
             )
 
             is MainMessage.LoadInitialData -> copy(
-                itemsWithMood = msg.itemsWithMood,
+                data = msg.data,
                 today = msg.today,
                 selectedDate = msg.selectedDate,
                 currentPage = msg.currentPage,
-                tasks = msg.tasks,
             )
 
             is MainMessage.DataUpdated -> copy(
-                itemsWithMood = msg.itemsWithMood,
-                tasks = msg.tasks,
+                data = msg.data,
             )
 
             is MainMessage.UpdateCompletion -> copy(
-                itemsWithMood = msg.itemsWithMood,
-                tasks = msg.tasks,
+                data = msg.data,
             )
 
             is MainMessage.UpdateMood -> copy(
-                itemsWithMood = msg.itemsWithMood,
+                data = msg.data,
             )
         }
     }

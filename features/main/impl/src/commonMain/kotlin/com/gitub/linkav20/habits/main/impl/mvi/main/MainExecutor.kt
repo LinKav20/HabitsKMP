@@ -9,9 +9,8 @@ import com.gitub.linkav20.habits.main.api.main.MainIntent
 import com.gitub.linkav20.habits.main.api.main.MainNav
 import com.gitub.linkav20.habits.main.api.main.MainStore
 import com.gitub.linkav20.habits.main.api.domain.model.main.CheckingItem
-import com.gitub.linkav20.habits.main.api.domain.model.main.CheckingItemWithCompletion
 import com.gitub.linkav20.habits.main.api.domain.model.main.HabitItem
-import com.gitub.linkav20.habits.main.api.domain.model.main.ItemsWithMood
+import com.gitub.linkav20.habits.main.api.domain.model.main.MainData
 import com.gitub.linkav20.habits.main.api.domain.model.main.TodoItem
 import com.gitub.linkav20.habits.main.impl.domain.usecase.GetMoodAndItemsUseCase
 import com.gitub.linkav20.habits.main.impl.domain.usecase.SetItemIsDoneUseCase
@@ -20,9 +19,7 @@ import com.gitub.linkav20.habits.main.impl.domain.usecase.UpdateTodoUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.plus
 
 internal class MainExecutor(
     channel: SendChannel<MainNav>,
@@ -68,30 +65,27 @@ internal class MainExecutor(
                 dispatch(
                     MainMessage.ChangeSelectedDate(
                         selectedDate = intent.date,
-                        tasks = getTasks(
-                            data = state().itemsWithMood.checkingItemWithCompletion,
-                            selectedDate = intent.date,
-                        ),
                     ),
                 )
             }
 
             is MainIntent.ChangeItemIsDone -> {
                 val state = state()
+                val data = state.data ?: return
 
-                val updatedHabitsWithMood = state.itemsWithMood.copy(
-                    checkingItemWithCompletion = state.itemsWithMood.checkingItemWithCompletion.map { itemWithCompletion ->
+                val updatedData = data.copy(
+                    items = data.items.map { itemWithCompletion ->
                         if (itemWithCompletion.checkingItem == intent.item) {
-                            val updatedCompletion = itemWithCompletion.completion.map { (date, isDone) ->
-                                if (date == intent.date) {
-                                    val newItem = changeItemIsDone(
-                                        item = itemWithCompletion.checkingItem,
-                                        isDone = isDone,
-                                        date = date,
-                                    )
-                                    newItem
+                            val updatedCompletion = itemWithCompletion.completion.toMutableMap().apply {
+                                val value = changeItemIsDone(
+                                    item = itemWithCompletion.checkingItem,
+                                    isDone = this[intent.date],
+                                    date = intent.date,
+                                )
+                                if (value == null) {
+                                    remove(intent.date)
                                 } else {
-                                    date to isDone
+                                    this[intent.date] = value
                                 }
                             }
                             itemWithCompletion.copy(completion = updatedCompletion)
@@ -103,33 +97,24 @@ internal class MainExecutor(
 
                 dispatch(
                     MainMessage.UpdateCompletion(
-                        itemsWithMood = updatedHabitsWithMood,
-                        tasks = getTasks(
-                            selectedDate = state.selectedDate,
-                            data = updatedHabitsWithMood.checkingItemWithCompletion,
-                        ),
+                        data = updatedData,
                     ),
                 )
             }
 
             is MainIntent.SetRate -> {
                 val state = state()
-                val updatedHabitsWithMood = state.itemsWithMood.copy(
-                    mood = state.itemsWithMood.mood.map { mood ->
-                        if (mood.date == intent.date) {
-                            updateMoodInDatabase(
-                                rate = intent.rate,
-                                date = intent.date,
-                            )
-                            mood.copy(rate = intent.rate)
-                        } else {
-                            mood
-                        }
-                    },
+                val data = state.data ?: return
+                updateMoodInDatabase(
+                    rate = intent.rate,
+                    date = intent.date,
+                )
+                val updatedData = data.copy(
+                    moods = data.moods + (intent.date to intent.rate),
                 )
                 dispatch(
                     MainMessage.UpdateMood(
-                        itemsWithMood = updatedHabitsWithMood,
+                        data = updatedData,
                     ),
                 )
             }
@@ -145,15 +130,10 @@ internal class MainExecutor(
                     getMoodAndItemsUseCase.invoke(
                         startDate = weeks.first,
                         endDate = weeks.second,
-                        pagesCount = END + START,
                     ).onSuccess { data ->
                         dispatch(
                             MainMessage.DataUpdated(
-                                itemsWithMood = data,
-                                tasks = getTasks(
-                                    data = data.checkingItemWithCompletion,
-                                    selectedDate = today,
-                                ),
+                                data = data,
                             ),
                         )
                     }.onFailure {
@@ -182,20 +162,15 @@ internal class MainExecutor(
                     state.selectedDate
                 }
                 if (state.today != today || forceUpdate) {
-                    val itemsWithMood = failAllUndoneTasks()
-                    val currentPage = itemsWithMood.days.indexOf(selectedDate) / DAYS_IN_WEEK
+                    val data = failAllUndoneTasks() ?: continue
+                    val days = Time.getDateRangeInclusive(data.startDate, data.endDate)
+                    val currentPage = days.indexOf(selectedDate) / DAYS_IN_WEEK
                     dispatch(
                         MainMessage.LoadInitialData(
                             today = today,
                             selectedDate = selectedDate,
                             currentPage = currentPage,
-                            itemsWithMood = itemsWithMood.copy(
-                                pagesCount = itemsWithMood.days.size / DAYS_IN_WEEK,
-                            ),
-                            tasks = getTasks(
-                                selectedDate = selectedDate,
-                                data = itemsWithMood.checkingItemWithCompletion,
-                            ),
+                            data = data,
                         ),
                     )
                 }
@@ -203,38 +178,47 @@ internal class MainExecutor(
         }
     }
 
-    private fun failAllUndoneTasks(): ItemsWithMood {
+    private fun failAllUndoneTasks(): MainData? {
         val state = state()
+        val data = state.data ?: return null
         val today = Time.now()
 
-        val updatedItems = state.itemsWithMood.checkingItemWithCompletion.map { itemWithCompletion ->
+        val updatedItems = data.items.map { itemWithCompletion ->
             val item = itemWithCompletion.checkingItem
             if (item is TodoItem && item.repeatPeriod is TodoItem.RepeatPeriod.Single) {
                 // todo do not reschedule if done
                 val (item, isDone) = rescheduleItem(item)
-                val updatedCompletion = itemWithCompletion.completion.map { (date, _) -> date to isDone }
+                val updatedCompletion = if (isDone == null) {
+                    emptyMap()
+                } else {
+                    itemWithCompletion.completion.keys.associateWith { isDone }
+                }
                 itemWithCompletion.copy(
                     checkingItem = item,
                     completion = updatedCompletion,
                 )
             } else {
-                val updatedCompletion = itemWithCompletion.completion.map { (date, isDone) ->
-                    if (date < today) {
-                        changeItemCompletion(
+                val updatedCompletion = itemWithCompletion.completion.toMutableMap()
+                Time.getDateRangeInclusive(data.startDate, data.endDate)
+                    .filter { date -> date < today && item.isPlanned(date) }
+                    .forEach { date ->
+                        val value = changeItemCompletion(
                             item = item,
-                            isDone = isDone,
+                            isDone = updatedCompletion[date],
                             date = date,
                         )
-                    } else {
-                        date to isDone
+                        if (value == null) {
+                            updatedCompletion.remove(date)
+                        } else {
+                            updatedCompletion[date] = value
+                        }
                     }
-                }
                 itemWithCompletion.copy(completion = updatedCompletion)
             }
         }
 
-        return state.itemsWithMood.copy(
-            checkingItemWithCompletion = updatedItems,
+        return data.copy(
+            items = updatedItems,
         )
     }
 
@@ -250,18 +234,13 @@ internal class MainExecutor(
         getMoodAndItemsUseCase.invoke(
             startDate = weeks.first,
             endDate = weeks.second,
-            pagesCount = END + START,
         ).onSuccess { data ->
             dispatch(
                 MainMessage.LoadInitialData(
                     today = today,
                     selectedDate = today,
-                    itemsWithMood = data,
+                    data = data,
                     currentPage = START,
-                    tasks = getTasks(
-                        data = data.checkingItemWithCompletion,
-                        selectedDate = today,
-                    ),
                 ),
             )
         }.onFailure {
@@ -269,67 +248,11 @@ internal class MainExecutor(
         }
     }
 
-    private fun getTasks(
-        selectedDate: LocalDate,
-        data: List<CheckingItemWithCompletion>,
-    ): Map<LocalDate, List<Pair<CheckingItem, Boolean>>> {
-        val datesForTasksList = getListDatesForTasksListBySelectedDay(selectedDate)
-        val completionMap = data.associate { itemWithCompletion ->
-            itemWithCompletion.checkingItem to itemWithCompletion.completion.toMap()
-        }
-        val tasksWithDates = data.flatMap { checkingItemWithCompletion ->
-            val item = checkingItemWithCompletion.checkingItem
-            val completionByDate = completionMap[item] ?: emptyMap()
-            when (item) {
-                is HabitItem -> datesForTasksList
-                    .filter {
-                        datesForTasksList.any { date -> date >= item.startDate }
-                                && it.dayOfWeek in item.daysForHabit
-                    }
-                    .map { date ->
-                        val isDone = completionByDate[date] ?: false
-                        date to (item to isDone)
-                    }
-
-                is TodoItem -> datesForTasksList
-                    .filter { item.isPlanned(it) }
-                    .map { date ->
-                        val isDone = completionByDate[date] ?: false
-                        date to (item to isDone)
-                    }
-
-                else -> emptyList()
-            }
-        }
-        val groupedTasks = tasksWithDates.groupBy(
-            keySelector = { (date, _) -> date },
-            valueTransform = { (_, pair) -> pair },
-        )
-        return groupedTasks
-    }
-
-    private fun getListDatesForTasksListBySelectedDay(selectedDate: LocalDate): List<LocalDate> {
-        val today = Time.now()
-        return if (selectedDate == today) {
-            listOf(
-                today,
-                today.plus(1, DAY),
-                today.plus(2, DAY),
-                today.plus(3, DAY),
-                today.plus(4, DAY),
-            )
-        } else {
-            listOf(
-                selectedDate,
-            )
-        }
-    }
-
     private fun changeItemIsDone(
         item: CheckingItem,
         isDone: Boolean?,
         date: LocalDate,
-    ): Pair<LocalDate, Boolean?> {
+    ): Boolean? {
         val isDone = if (isDone == null || !isDone) {
             true
         } else if (
@@ -347,14 +270,14 @@ internal class MainExecutor(
                 isDone = isDone,
             )
         }
-        return date to isDone
+        return isDone
     }
 
     private fun changeItemCompletion(
         item: CheckingItem,
         isDone: Boolean?,
         date: LocalDate,
-    ): Pair<LocalDate, Boolean?> {
+    ): Boolean? {
         val isItemDone = when (item) {
             is HabitItem -> {
                 if (item.daysForHabit.contains(date.dayOfWeek) && isDone == null) {
@@ -389,7 +312,13 @@ internal class MainExecutor(
                 isDone = isItemDone,
             )
         }
-        return date to isItemDone
+        return isItemDone
+    }
+
+    private fun CheckingItem.isPlanned(date: LocalDate): Boolean = when (this) {
+        is HabitItem -> dateInHabitRange(date) && date.dayOfWeek in daysForHabit
+        is TodoItem -> isPlanned(date)
+        else -> false
     }
 
     override fun dispose() {

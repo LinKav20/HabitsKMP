@@ -15,7 +15,7 @@ interface ItemsRepository {
         item: CheckingItem,
         startDate: LocalDate,
         endDate: LocalDate,
-    ): Result<List<Pair<LocalDate, Boolean?>>>
+    ): Result<Map<LocalDate, Boolean>>
 
     suspend fun setItemCompletion(
         item: CheckingItem,

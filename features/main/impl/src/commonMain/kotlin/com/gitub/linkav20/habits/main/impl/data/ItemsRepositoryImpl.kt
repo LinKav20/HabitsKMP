@@ -1,6 +1,5 @@
 package com.gitub.linkav20.habits.main.impl.data
 
-import com.github.linkav20.habits.core.utils.Time
 import com.github.linkav20.habits.database.habits.dao.CompletionDao
 import com.github.linkav20.habits.database.habits.dao.HabitsDao
 import com.github.linkav20.habits.database.habits.dao.TodoDao
@@ -36,17 +35,13 @@ class ItemsRepositoryImpl(
         item: CheckingItem,
         startDate: LocalDate,
         endDate: LocalDate,
-    ): Result<List<Pair<LocalDate, Boolean?>>> {
+    ): Result<Map<LocalDate, Boolean>> {
         return runCatching {
-            val interval = Time.getDateRangeInclusive(startDate, endDate)
-            val completion = completionDao.getCompletionsForHabit(
+            completionDao.getCompletionsForHabit(
                 itemId = item.id,
                 startDate = startDate.toString(),
                 endDate = endDate.toString(),
             ).associate { it.date to it.isCompleted }
-            interval.map { date ->
-                date to completion[date]
-            }
         }
     }
 

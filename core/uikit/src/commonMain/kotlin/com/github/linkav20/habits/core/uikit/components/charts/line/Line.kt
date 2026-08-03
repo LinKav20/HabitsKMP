@@ -25,6 +25,8 @@ internal fun DrawScope.drawLineChart(
     val globalMinX = lines?.verticalLines?.minOfOrNull { it.value.toFloat() } ?: lineChartData.minX
     val globalMaxX = lines?.verticalLines?.maxOfOrNull { it.value.toFloat() } ?: lineChartData.maxX
     lineChartData.series.forEachIndexed { seriesIndex, data ->
+        if (data.listOfPoints.isEmpty()) return@forEachIndexed
+
         val mappedPoints =
             mapDataToPixels(
                 points = data.listOfPoints,

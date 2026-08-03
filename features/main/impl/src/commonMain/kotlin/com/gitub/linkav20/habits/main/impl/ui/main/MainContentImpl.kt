@@ -74,8 +74,7 @@ import com.gitub.linkav20.habits.main.api.main.MainContent
 import com.gitub.linkav20.habits.main.api.main.MainEvent
 import com.gitub.linkav20.habits.main.api.main.MainStore
 import com.gitub.linkav20.habits.main.api.domain.model.main.CheckingItem
-import com.gitub.linkav20.habits.main.api.domain.model.main.HabitItem
-import com.gitub.linkav20.habits.main.api.domain.model.main.ItemsWithMood
+import com.gitub.linkav20.habits.main.api.domain.model.main.toEmoji
 import com.gitub.linkav20.habits.main.impl.ui.main.elements.MoodSheetContent
 import com.gitub.linkav20.habits.main.impl.ui.main.elements.TasksSheetContent
 import kotlinx.coroutines.launch
@@ -132,9 +131,10 @@ private fun Content(
     onViewItemClick: (CheckingItem) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val uiModel = remember(state) { state.toUiModel() }
     val pagerState = rememberPagerState(
         initialPage = state.currentPage,
-        pageCount = { state.pagesCount },
+        pageCount = { uiModel.pages.size },
     )
     var moodBottomSheetVisibility by remember { mutableStateOf<LocalDate?>(null) }
 
@@ -215,6 +215,7 @@ private fun Content(
                                     GraphHabitsContent(
                                         page = page,
                                         state = state,
+                                        week = uiModel.pages[page],
                                         animatedVisibilityScope = this@AnimatedContent,
                                         sharedTransitionScope = this@SharedTransitionLayout,
                                         onChangeSelectedDate = onChangeSelectedDate,
@@ -224,8 +225,8 @@ private fun Content(
 
                                 BottomSheetState.MAXIMIZED -> {
                                     SimpleHabitContent(
-                                        page = page,
                                         state = state,
+                                        week = uiModel.pages[page],
                                         animatedVisibilityScope = this@AnimatedContent,
                                         sharedTransitionScope = this@SharedTransitionLayout,
                                         onChangeSelectedDate = onChangeSelectedDate,
@@ -324,7 +325,7 @@ private fun Content(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f),
-                        tasks = state.groupedTasks,
+                        tasks = uiModel.groupedTasks,
                         onCheckItemClick = onCheckItemClick,
                         onSetMoodClick = { date ->
                             moodBottomSheetVisibility = date
@@ -350,6 +351,7 @@ private fun Content(
 private fun GraphHabitsContent(
     page: Int,
     state: MainStore.State,
+    week: WeekUiModel,
     modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -367,8 +369,7 @@ private fun GraphHabitsContent(
                 .padding(vertical = 16.dp),
         ) {
             HabitsWithCompletion(
-                page = page,
-                itemsWithMood = state.itemsWithMood,
+                habits = week.habits,
                 onCheckItemClick = onCheckItemClick,
             )
         }
@@ -381,7 +382,7 @@ private fun GraphHabitsContent(
                     .weight(1f)
                     .height(250.dp),
             )
-            state.getDays(page)
+            week.days
                 .forEach { date ->
                     Column(
                         modifier = Modifier.weight(1f).height(300.dp),
@@ -414,7 +415,7 @@ private fun GraphHabitsContent(
             )
             MoodChart(
                 modifier = Modifier.weight(7f).height(250.dp),
-                points = state.getChartPoints(page),
+                points = week.chartPoints,
             )
         }
     }
@@ -423,8 +424,8 @@ private fun GraphHabitsContent(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun SimpleHabitContent(
-    page: Int,
     state: MainStore.State,
+    week: WeekUiModel,
     modifier: Modifier = Modifier,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -434,7 +435,7 @@ private fun SimpleHabitContent(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        state.getDays(page)
+        week.days
             .forEachIndexed { index, day ->
                 Column(
                     modifier = Modifier.weight(1f),
@@ -451,10 +452,7 @@ private fun SimpleHabitContent(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = state.itemsWithMood.getMoodEmoji(
-                            indexInPage = index,
-                            page = page,
-                        ),
+                        text = week.moodRates[index].toEmoji(),
                         style = HabitTheme.typography.body,
                         color = HabitTheme.colors.textPrimary,
                     )
@@ -605,17 +603,16 @@ private fun MoodChart(
 
 @Composable
 private fun HabitsWithCompletion(
-    page: Int,
-    itemsWithMood: ItemsWithMood,
+    habits: List<HabitRowUiModel>,
     onCheckItemClick: (CheckingItem, LocalDate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (itemsWithMood.checkingItemWithCompletion.isEmpty()) {
+    if (habits.isEmpty()) {
         EmptyHabitsInGraph()
     } else {
         LazyColumn(modifier = modifier) {
-            items(itemsWithMood.checkingItemWithCompletion) { item ->
-                val habit = item.checkingItem as? HabitItem ?: return@items
+            items(habits) { item ->
+                val habit = item.item
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -628,10 +625,7 @@ private fun HabitsWithCompletion(
                             .padding(8.dp),
                         color = HabitTheme.colors.textPrimary,
                     )
-                    itemsWithMood.getCompletionForItem(
-                        item = item,
-                        page = page,
-                    )
+                    item.completion
                         .forEach {
                             Box(
                                 modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -645,7 +639,7 @@ private fun HabitsWithCompletion(
                                                 contentDescription = null,
                                                 tint = HabitTheme.colors.iconAccentPrimary,
                                                 modifier = Modifier.size(20.dp).clickable {
-                                                    onCheckItemClick(item.checkingItem, it.first)
+                                                    onCheckItemClick(item.item, it.first)
                                                 },
                                             )
                                         } else {
@@ -654,23 +648,23 @@ private fun HabitsWithCompletion(
                                                 contentDescription = null,
                                                 tint = HabitTheme.colors.iconAccentPrimary,
                                                 modifier = Modifier.size(20.dp).clickable {
-                                                    onCheckItemClick(item.checkingItem, it.first)
+                                                    onCheckItemClick(item.item, it.first)
                                                 },
                                             )
                                         }
-                                    } else if (it.first.dayOfWeek in (item.checkingItem as HabitItem).daysForHabit) {
+                                    } else if (it.first.dayOfWeek in item.item.daysForHabit) {
                                         Icon(
                                             painter = painterResource(HabitIcons.ItemPlanned_20),
                                             contentDescription = null,
                                             tint = HabitTheme.colors.iconAccentPrimary,
                                             modifier = Modifier.size(20.dp).clickable {
-                                                onCheckItemClick(item.checkingItem, it.first)
+                                                onCheckItemClick(item.item, it.first)
                                             },
                                         )
                                     } else {
                                         Box(
                                             modifier = Modifier.size(20.dp).clickable {
-                                                onCheckItemClick(item.checkingItem, it.first)
+                                                onCheckItemClick(item.item, it.first)
                                             },
                                         )
                                     }
