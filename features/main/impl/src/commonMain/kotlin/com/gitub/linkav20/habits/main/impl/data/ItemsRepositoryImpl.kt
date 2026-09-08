@@ -1,5 +1,6 @@
 package com.gitub.linkav20.habits.main.impl.data
 
+import com.github.linkav20.habits.core.utils.runCatchingCancellable
 import com.github.linkav20.habits.database.habits.dao.CompletionDao
 import com.github.linkav20.habits.database.habits.dao.HabitsDao
 import com.github.linkav20.habits.database.habits.dao.TodoDao
@@ -21,7 +22,7 @@ class ItemsRepositoryImpl(
         startDate: LocalDate,
         endDate: LocalDate,
     ): Result<List<CheckingItem>> =
-        runCatching {
+        runCatchingCancellable {
             val habits = habitsDao.getActiveHabitsOnDate(startDate.toString()).map {
                 it.toDomain()
             }
@@ -36,7 +37,7 @@ class ItemsRepositoryImpl(
         startDate: LocalDate,
         endDate: LocalDate,
     ): Result<Map<LocalDate, Boolean>> {
-        return runCatching {
+        return runCatchingCancellable {
             completionDao.getCompletionsForHabit(
                 itemId = item.id,
                 startDate = startDate.toString(),

@@ -11,6 +11,7 @@ internal sealed interface MainMessage {
 
     data class LoadInitialData(
         val data: MainData,
+        val cachedWeekStarts: Set<LocalDate>,
         val today: LocalDate,
         val selectedDate: LocalDate,
         val currentPage: Int,
@@ -18,7 +19,13 @@ internal sealed interface MainMessage {
 
     data class DataUpdated(
         val data: MainData,
+        val cachedWeekStarts: Set<LocalDate>,
+        val failedWeekStarts: Set<LocalDate>,
     ) : MainMessage
+
+    data object InitialLoadStarted : MainMessage
+
+    data object InitialLoadFailed : MainMessage
 
     data class UpdateCompletion(
         val data: MainData,

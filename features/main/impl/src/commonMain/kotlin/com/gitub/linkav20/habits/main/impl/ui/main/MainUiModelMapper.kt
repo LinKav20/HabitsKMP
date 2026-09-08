@@ -1,27 +1,41 @@
 package com.gitub.linkav20.habits.main.impl.ui.main
 
 import com.github.linkav20.habits.core.uikit.components.charts.line.LineChartPoint
-import com.github.linkav20.habits.core.utils.Time
 import com.gitub.linkav20.habits.main.api.domain.model.main.CheckingItem
 import com.gitub.linkav20.habits.main.api.domain.model.main.HabitItem
 import com.gitub.linkav20.habits.main.api.domain.model.main.TodoItem
 import com.gitub.linkav20.habits.main.api.domain.model.main.taskslist.TasksGroup
 import com.gitub.linkav20.habits.main.api.domain.model.main.taskslist.TasksItem
 import com.gitub.linkav20.habits.main.api.main.MainStore
+import com.gitub.linkav20.habits.main.impl.mvi.main.calendarWeekDates
+import com.gitub.linkav20.habits.main.impl.mvi.main.calendarWeekStart
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 
 internal data class MainUiModel(
-    val pages: List<WeekUiModel>,
     val groupedTasks: Map<TasksGroup, List<Pair<TasksItem, Pair<LocalDate, Boolean?>>>>,
 )
 
+/**
+ * Whether the data behind a calendar week is actually available.
+ *
+ * The pager can show any week, so "no habits" and "no mood" must never be rendered for a week
+ * that simply has not been read from the database yet.
+ */
+internal enum class WeekLoadState {
+    LOADED,
+    LOADING,
+    FAILED,
+}
+
 internal data class WeekUiModel(
+    val weekStart: LocalDate,
     val days: List<LocalDate>,
     val moodRates: List<Int?>,
     val chartPoints: List<LineChartPoint>,
     val habits: List<HabitRowUiModel>,
+    val loadState: WeekLoadState,
 )
 
 internal data class HabitRowUiModel(
@@ -29,27 +43,40 @@ internal data class HabitRowUiModel(
     val completion: List<Pair<LocalDate, Boolean?>>,
 )
 
-/** The only place where canonical screen data is expanded into date intervals. */
 internal fun MainStore.State.toUiModel(): MainUiModel {
-    val data = data ?: return MainUiModel(emptyList(), emptyMap())
-    val pages = Time.getDateRangeInclusive(data.startDate, data.endDate)
-        .chunked(DAYS_IN_WEEK)
-        .map { days ->
-            val moodRates = days.map(data.moods::get)
-            WeekUiModel(
-                days = days,
-                moodRates = moodRates,
-                chartPoints = moodRates.toChartPoints(days, today),
-                habits = data.items.mapNotNull { itemWithCompletion ->
-                    val habit = itemWithCompletion.checkingItem as? HabitItem ?: return@mapNotNull null
-                    HabitRowUiModel(
-                        item = habit,
-                        completion = days.map { date -> date to itemWithCompletion.completion[date] },
-                    )
-                },
+    return MainUiModel(groupedTasks = buildTaskGroups())
+}
+
+internal fun MainStore.State.toWeekUiModel(weekStart: LocalDate): WeekUiModel {
+    val normalizedWeekStart = calendarWeekStart(weekStart)
+    val days = calendarWeekDates(normalizedWeekStart)
+    val loadState = when {
+        normalizedWeekStart in cachedWeekStarts -> WeekLoadState.LOADED
+        normalizedWeekStart in failedWeekStarts -> WeekLoadState.FAILED
+        else -> WeekLoadState.LOADING
+    }
+    val loadedData = data.takeIf { loadState == WeekLoadState.LOADED }
+    val moodRates = days.map { date -> loadedData?.moods?.get(date) }
+    return WeekUiModel(
+        weekStart = normalizedWeekStart,
+        days = days,
+        moodRates = moodRates,
+        // A missing rate only means "not rated" once the week is actually loaded; otherwise the
+        // chart would draw a full week of zeroes, which reads as the lowest possible mood.
+        chartPoints = if (loadState == WeekLoadState.LOADED) {
+            moodRates.toChartPoints(days, today)
+        } else {
+            emptyList()
+        },
+        habits = loadedData?.items.orEmpty().mapNotNull { itemWithCompletion ->
+            val habit = itemWithCompletion.checkingItem as? HabitItem ?: return@mapNotNull null
+            HabitRowUiModel(
+                item = habit,
+                completion = days.map { date -> date to itemWithCompletion.completion[date] },
             )
-        }
-    return MainUiModel(pages = pages, groupedTasks = buildTaskGroups())
+        },
+        loadState = loadState,
+    )
 }
 
 private fun MainStore.State.buildTaskGroups():
@@ -131,5 +158,4 @@ private fun List<Int?>.toChartPoints(days: List<LocalDate>, today: LocalDate) =
         }
     }
 
-private const val DAYS_IN_WEEK = 7
 private const val TASK_PREVIEW_DAYS = 5

@@ -6,6 +6,15 @@ import kotlinx.datetime.LocalDate
 sealed interface MainIntent {
     data class ChangeSelectedDate(val date: LocalDate) : MainIntent
 
+    data class CalendarPageSettled(
+        val weekStart: LocalDate,
+        val prefetch: Boolean,
+    ) : MainIntent
+
+    data object RetryInitialLoad : MainIntent
+
+    data class RetryCalendarWeek(val weekStart: LocalDate) : MainIntent
+
     data class ChangeItemIsDone(
         val item: CheckingItem,
         val date: LocalDate,

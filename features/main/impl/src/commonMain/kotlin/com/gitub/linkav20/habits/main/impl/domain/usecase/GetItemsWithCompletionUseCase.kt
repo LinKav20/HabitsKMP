@@ -29,9 +29,7 @@ class GetItemsWithCompletionUseCase(
                 }
                 Result.success(a)
             },
-            onFailure = {
-                Result.failure(Throwable("Error to get items")) // todo
-            },
+            onFailure = { Result.failure(it) },
         )
     }
 

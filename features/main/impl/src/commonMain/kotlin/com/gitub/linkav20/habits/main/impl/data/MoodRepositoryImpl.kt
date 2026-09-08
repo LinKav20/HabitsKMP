@@ -1,5 +1,6 @@
 package com.gitub.linkav20.habits.main.impl.data
 
+import com.github.linkav20.habits.core.utils.runCatchingCancellable
 import com.github.linkav20.habits.database.mood.dao.MoodDao
 import com.github.linkav20.habits.database.mood.model.MoodEntity
 import com.gitub.linkav20.habits.main.api.domain.model.main.MoodItem
@@ -13,14 +14,14 @@ class MoodRepositoryImpl(
     override suspend fun getMood(
         startDate: LocalDate,
         endDate: LocalDate,
-    ): Result<List<MoodItem>> = runCatching {
+    ): Result<List<MoodItem>> = runCatchingCancellable {
         moodDao.getMoods(
             startDate = startDate.toString(),
             endDate = endDate.toString(),
         ).map { it.toDomain() }
     }
 
-    override suspend fun setMood(rate: Int, date: LocalDate) = runCatching {
+    override suspend fun setMood(rate: Int, date: LocalDate) = runCatchingCancellable {
         moodDao.insertMood(
             MoodEntity(
                 rate = rate,

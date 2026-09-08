@@ -12,6 +12,7 @@ internal class MainReducer : Reducer<MainStore.State, MainMessage> {
 
             is MainMessage.LoadInitialData -> copy(
                 data = msg.data,
+                cachedWeekStarts = msg.cachedWeekStarts,
                 today = msg.today,
                 selectedDate = msg.selectedDate,
                 currentPage = msg.currentPage,
@@ -19,6 +20,17 @@ internal class MainReducer : Reducer<MainStore.State, MainMessage> {
 
             is MainMessage.DataUpdated -> copy(
                 data = msg.data,
+                cachedWeekStarts = msg.cachedWeekStarts,
+                failedWeekStarts = msg.failedWeekStarts,
+            )
+
+            MainMessage.InitialLoadStarted -> copy(
+                failedWeekStarts = emptySet(),
+                initialLoadFailed = false,
+            )
+
+            MainMessage.InitialLoadFailed -> copy(
+                initialLoadFailed = true,
             )
 
             is MainMessage.UpdateCompletion -> copy(

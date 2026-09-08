@@ -12,6 +12,15 @@ sealed interface MainEvent {
 
     data class ChangeSelectedDate(val date: LocalDate) : MainEvent
 
+    data class CalendarPageSettled(
+        val weekStart: LocalDate,
+        val prefetch: Boolean,
+    ) : MainEvent
+
+    data object RetryInitialLoad : MainEvent
+
+    data class RetryCalendarWeek(val weekStart: LocalDate) : MainEvent
+
     data class OnCheckingItemClick(
         val checkingItem: CheckingItem,
         val date: LocalDate,

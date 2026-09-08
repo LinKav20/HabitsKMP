@@ -49,6 +49,23 @@ internal class DefaultMainComponent private constructor(
                 store.accept(MainIntent.ChangeSelectedDate(event.date))
             }
 
+            is MainEvent.CalendarPageSettled -> {
+                store.accept(
+                    MainIntent.CalendarPageSettled(
+                        weekStart = event.weekStart,
+                        prefetch = event.prefetch,
+                    ),
+                )
+            }
+
+            is MainEvent.RetryInitialLoad -> {
+                store.accept(MainIntent.RetryInitialLoad)
+            }
+
+            is MainEvent.RetryCalendarWeek -> {
+                store.accept(MainIntent.RetryCalendarWeek(event.weekStart))
+            }
+
             is MainEvent.OnCheckingItemClick -> {
                 store.accept(
                     MainIntent.ChangeItemIsDone(

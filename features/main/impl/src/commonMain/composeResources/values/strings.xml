@@ -4,6 +4,9 @@
     <string name="yesterday_title">Вчера, %1$s</string>
     <string name="tomorrow_title">Завтра, %1$s</string>
 
+    <string name="main_retry_button">Повторить</string>
+    <string name="calendar_week_error_title">Не удалось загрузить неделю</string>
+
     <string name="today_tasks_title">Сегодня</string>
     <string name="tomorrow_tasks_title">Завтра</string>
     <string name="later_tasks_title">Потом</string>
