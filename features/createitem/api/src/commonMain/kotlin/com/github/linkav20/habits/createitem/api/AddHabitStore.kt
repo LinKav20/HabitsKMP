@@ -7,6 +7,7 @@ import com.github.linkav20.habits.createitem.api.model.CreationForm
 
 interface AddHabitStore : Store<AddHabitIntent, AddHabitStore.State, AddHabitLabel> {
     data class State(
+        val isTodoEnabled: Boolean = false,
         val creationForm: CreationForm = AddHabitForm(),
     ) {
         fun canCreate(): Boolean {

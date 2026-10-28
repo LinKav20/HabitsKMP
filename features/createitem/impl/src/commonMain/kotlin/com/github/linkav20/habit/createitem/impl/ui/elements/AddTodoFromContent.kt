@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.linkav20.habits.core.uikit.HabitIcons
 import com.github.linkav20.habits.core.uikit.HabitTheme
+import com.github.linkav20.habits.core.uikit.components.radiobutton.HabitRadioButtonDefaults
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
 import com.github.linkav20.habits.core.uikit.components.button.HabitButtonType
 import com.github.linkav20.habits.core.uikit.components.dayselector.HabitDayPicker
@@ -189,12 +189,9 @@ private fun SelectRepeatMonthly(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
+                colors = HabitRadioButtonDefaults.colors(),
                 selected = repeatPeriod.repeatOnFirstDay,
                 onClick = onChangeUseFirstMonthDay,
-                colors = RadioButtonDefaults.colors().copy(
-                    selectedColor = HabitTheme.colors.borderAccentPrimary,
-                    unselectedColor = HabitTheme.colors.borderBasic,
-                ),
             )
             Text(
                 modifier = Modifier.fillMaxWidth().weight(1f),
@@ -208,12 +205,9 @@ private fun SelectRepeatMonthly(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
+                colors = HabitRadioButtonDefaults.colors(),
                 selected = repeatPeriod.repeatOnLastDay,
                 onClick = onChangeUseLastMonthDay,
-                colors = RadioButtonDefaults.colors().copy(
-                    selectedColor = HabitTheme.colors.borderAccentPrimary,
-                    unselectedColor = HabitTheme.colors.borderBasic,
-                ),
             )
             Text(
                 modifier = Modifier.fillMaxWidth().weight(1f),
@@ -227,6 +221,7 @@ private fun SelectRepeatMonthly(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
+                colors = HabitRadioButtonDefaults.colors(),
                 selected = repeatPeriod.days != null,
                 onClick = {
                     onChangeSpecificDay(
@@ -235,10 +230,6 @@ private fun SelectRepeatMonthly(
                         ),
                     )
                 },
-                colors = RadioButtonDefaults.colors().copy(
-                    selectedColor = HabitTheme.colors.borderAccentPrimary,
-                    unselectedColor = HabitTheme.colors.borderBasic,
-                ),
             )
             Text(
                 modifier = Modifier.fillMaxWidth().weight(1f),

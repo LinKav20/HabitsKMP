@@ -7,4 +7,6 @@
     <string name="device_id_title">Device ID: </string>
     <string name="token_title">Token: </string>
     <string name="reset_token_config_title">Clear token</string>
+    <string name="feature_flags_title">Feature flags</string>
+    <string name="todos_feature_description">Show todos on the main screen and allow creating single and recurring todos.</string>
 </resources>

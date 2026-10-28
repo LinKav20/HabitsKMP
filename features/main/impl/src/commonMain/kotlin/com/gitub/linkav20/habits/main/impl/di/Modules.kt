@@ -1,12 +1,11 @@
 package com.gitub.linkav20.habits.main.impl.di
 
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import org.koin.dsl.module
 import com.github.linkav20.habits.core.mvi.navigation.impl.NavStoreFactoryImpl
-import com.gitub.linkav20.habits.main.api.main.MainComponent
-import com.gitub.linkav20.habits.main.api.main.MainContent
 import com.gitub.linkav20.habits.main.api.MainNavComponent
 import com.gitub.linkav20.habits.main.api.MainNavContent
+import com.gitub.linkav20.habits.main.api.main.MainComponent
+import com.gitub.linkav20.habits.main.api.main.MainContent
 import com.gitub.linkav20.habits.main.api.main.MainStore
 import com.gitub.linkav20.habits.main.impl.communication.GlobalCommunication
 import com.gitub.linkav20.habits.main.impl.data.ItemsRepositoryImpl
@@ -20,10 +19,11 @@ import com.gitub.linkav20.habits.main.impl.domain.usecase.SetItemIsDoneUseCase
 import com.gitub.linkav20.habits.main.impl.domain.usecase.SetMoodUseCase
 import com.gitub.linkav20.habits.main.impl.domain.usecase.UpdateTodoUseCase
 import com.gitub.linkav20.habits.main.impl.mvi.main.MainStoreFactoryImpl
-import com.gitub.linkav20.habits.main.impl.ui.main.DefaultMainComponent
 import com.gitub.linkav20.habits.main.impl.ui.DefaultMainNavComponent
-import com.gitub.linkav20.habits.main.impl.ui.main.MainContentImpl
 import com.gitub.linkav20.habits.main.impl.ui.MainNavContentImpl
+import com.gitub.linkav20.habits.main.impl.ui.main.DefaultMainComponent
+import com.gitub.linkav20.habits.main.impl.ui.main.MainContentImpl
+import org.koin.dsl.module
 
 fun mainFeatureModule() =
     module {
@@ -51,7 +51,7 @@ fun mainFeatureModule() =
             )
         }
 
-        factory<ItemsRepository> { ItemsRepositoryImpl(get(), get(), get()) }
+        factory<ItemsRepository> { ItemsRepositoryImpl(get(), get(), get(), get()) }
 
         factory<MoodRepository> { MoodRepositoryImpl(get()) }
 

@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.datastore)
+            implementation(projects.core.featureflags)
             implementation(projects.core.database)
             implementation(projects.core.network)
             implementation(projects.core.utils)

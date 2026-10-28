@@ -1,6 +1,7 @@
 package com.gitub.linkav20.habits.main.impl.data
 
-import com.github.linkav20.habits.core.featureflags.FeatureFlags
+import com.github.linkav20.habits.core.featureflags.FeatureFlag
+import com.github.linkav20.habits.core.featureflags.usecase.GetFeatureFlagsUseCase
 import com.github.linkav20.habits.core.utils.runCatchingCancellable
 import com.github.linkav20.habits.database.habits.dao.CompletionDao
 import com.github.linkav20.habits.database.habits.dao.HabitsDao
@@ -14,6 +15,7 @@ import com.gitub.linkav20.habits.main.impl.domain.repository.ItemsRepository
 import kotlinx.datetime.LocalDate
 
 class ItemsRepositoryImpl(
+    val getFeatureFlagsUseCase: GetFeatureFlagsUseCase,
     val habitsDao: HabitsDao,
     val todoDao: TodoDao,
     val completionDao: CompletionDao,
@@ -27,7 +29,8 @@ class ItemsRepositoryImpl(
             val habits = habitsDao.getActiveHabitsOnDate(startDate.toString()).map {
                 it.toDomain()
             }
-            val todos = if (FeatureFlags.TODOS_ENABLED) {
+            val featureFlags = getFeatureFlagsUseCase.invoke(flags = listOf(FeatureFlag.TODOS_ENABLED))
+            val todos = if (featureFlags.getValue(FeatureFlag.TODOS_ENABLED)) {
                 todoDao.getActiveTodosOnDate().map { it.toDomain() }
             } else {
                 emptyList()

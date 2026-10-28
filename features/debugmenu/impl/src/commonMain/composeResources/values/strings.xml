@@ -7,4 +7,6 @@
     <string name="device_id_title">ID устройства: </string>
     <string name="token_title">Токен: </string>
     <string name="reset_token_config_title">Очистить токен</string>
+    <string name="feature_flags_title">Feature flags</string>
+    <string name="todos_feature_description">Показывать дела на главном экране и разрешить создание разовых и регулярных дел.</string>
 </resources>

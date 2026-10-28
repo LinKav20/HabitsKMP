@@ -1,14 +1,18 @@
 package com.github.linkav20.habits.debugmenu.impl.mvi
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kotlinx.coroutines.launch
+import com.github.linkav20.habits.core.featureflags.usecase.GetFeatureFlagsUseCase
+import com.github.linkav20.habits.core.featureflags.usecase.SetFeatureFlagUseCase
 import com.github.linkav20.habits.core.utils.showNeedToRestartDialog
 import com.github.linkav20.habits.datastore.datasource.SettingsStorage
 import com.github.linkav20.habits.debugmenu.api.DebugMenuIntent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuLabel
 import com.github.linkav20.habits.debugmenu.api.DebugMenuState
+import kotlinx.coroutines.launch
 
 internal class DebugMenuExecutor(
+    private val setFeatureFlagUseCase: SetFeatureFlagUseCase,
+    private val getFeatureFlagsUseCase: GetFeatureFlagsUseCase,
     private val settingsStorage: SettingsStorage,
     private val onShowNotification: () -> Unit,
 ) : CoroutineExecutor<DebugMenuIntent, DebugMenuAction, DebugMenuState, DebugMenuMessage, DebugMenuLabel>() {
@@ -18,6 +22,7 @@ internal class DebugMenuExecutor(
         when (action) {
             is DebugMenuAction.Init -> {
                 scope.launch {
+                    dispatch(DebugMenuMessage.FeatureFlagsLoaded(getFeatureFlagsUseCase.invoke()))
                     dispatch(
                         DebugMenuMessage.Data(
                             isStage = settingsStorage.getIsStage(),
@@ -33,6 +38,13 @@ internal class DebugMenuExecutor(
     override fun executeIntent(intent: DebugMenuIntent) {
         super.executeIntent(intent)
         when (intent) {
+            is DebugMenuIntent.ChangeFeatureFlag -> {
+                scope.launch {
+                    setFeatureFlagUseCase.invoke(key = intent.key, enabled = intent.enabled)
+                    dispatch(DebugMenuMessage.FeatureFlagChanged(intent.key, intent.enabled))
+                }
+            }
+
             is DebugMenuIntent.ChangeStage -> {
                 scope.launch {
                     settingsStorage.setIsStage(isStage = intent.isStage)

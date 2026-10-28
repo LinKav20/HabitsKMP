@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.github.linkav20.habit.createitem.impl.ui.elements.AddHabitFromContent
 import com.github.linkav20.habit.createitem.impl.ui.elements.AddTodoFromContent
-import com.github.linkav20.habits.core.featureflags.FeatureFlags
 import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
 import com.github.linkav20.habits.core.uikit.components.button.HabitButtonState
@@ -90,6 +89,7 @@ private fun Content(
         topBar = {
             TopBar(
                 selectedTab = state.creationForm,
+                isTodoEnabled = state.isTodoEnabled,
                 onTabChange = { onChangeForm(it) },
                 onBackClick = onBackClick,
             )
@@ -154,6 +154,7 @@ private fun Content(
 @Composable
 private fun TopBar(
     selectedTab: CreationForm,
+    isTodoEnabled: Boolean,
     onTabChange: (CreationForm) -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -181,7 +182,7 @@ private fun TopBar(
                 bottom = 18.dp,
             ),
         ) {
-            if (FeatureFlags.TODOS_ENABLED) {
+            if (isTodoEnabled) {
                 val habitTab = stringResource(Res.string.add_habit_habit_tab_title)
                 val todoTab = stringResource(Res.string.add_habit_todo_tab_title)
                 HabitSegmentedButton(

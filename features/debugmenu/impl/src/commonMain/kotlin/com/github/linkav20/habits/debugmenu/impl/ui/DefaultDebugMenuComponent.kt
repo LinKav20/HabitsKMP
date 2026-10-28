@@ -3,14 +3,14 @@ package com.github.linkav20.habits.debugmenu.impl.ui
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.StateFlow
-import org.koin.core.component.KoinComponent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuComponent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuEvent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuIntent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuState
 import com.github.linkav20.habits.debugmenu.impl.mvi.DebugMenuStore
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.StateFlow
+import org.koin.core.component.KoinComponent
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class DefaultDebugMenuComponent private constructor(
@@ -30,6 +30,9 @@ internal class DefaultDebugMenuComponent private constructor(
 
     override fun handleAction(event: DebugMenuEvent) {
         when (event) {
+            is DebugMenuEvent.ChangeFeatureFlag -> store.accept(
+                DebugMenuIntent.ChangeFeatureFlag(event.key, event.enabled),
+            )
             DebugMenuEvent.OnBackClick -> onBackClick()
             is DebugMenuEvent.ChangeIsStage -> store.accept(DebugMenuIntent.ChangeStage(event.isStage))
             DebugMenuEvent.ResetStageToken -> store.accept(DebugMenuIntent.ResetStageToken)

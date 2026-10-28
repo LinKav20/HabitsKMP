@@ -2,6 +2,8 @@ package com.github.linkav20.habit.createitem.impl.mvi
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.github.linkav20.habit.createitem.impl.domain.usecase.CreateItemUseCase
+import com.github.linkav20.habits.core.featureflags.FeatureFlag
+import com.github.linkav20.habits.core.featureflags.usecase.GetFeatureFlagsUseCase
 import com.github.linkav20.habits.core.utils.Time
 import com.github.linkav20.habits.createitem.api.AddHabitIntent
 import com.github.linkav20.habits.createitem.api.AddHabitLabel
@@ -12,7 +14,7 @@ import kotlinx.coroutines.launch
 
 internal class AddHabitExecutor(
     private val createItemUseCase: CreateItemUseCase,
-   // private val communication: GlobalCommunication,
+    private val getFeatureFlagsUseCase: GetFeatureFlagsUseCase,
 ) :
     CoroutineExecutor<AddHabitIntent, AddHabitAction, AddHabitStore.State, AddHabitMessage, AddHabitLabel>(
     ) {
@@ -20,7 +22,14 @@ internal class AddHabitExecutor(
     override fun executeAction(action: AddHabitAction) {
         super.executeAction(action)
         when (action) {
-            else -> {}
+            AddHabitAction.Init -> scope.launch {
+                dispatch(
+                    AddHabitMessage.TodoEnabledLoaded(
+                        isTodoEnabled = getFeatureFlagsUseCase.invoke(flags = listOf(FeatureFlag.TODOS_ENABLED))
+                            .getValue(FeatureFlag.TODOS_ENABLED),
+                    ),
+                )
+            }
         }
     }
 
@@ -28,7 +37,9 @@ internal class AddHabitExecutor(
         super.executeIntent(intent)
         when (intent) {
             is AddHabitIntent.OpenNewCreationForm -> {
-                dispatch(AddHabitMessage.OpenNewCreationForm(intent.creationForm))
+                if (intent.creationForm !is AddTodoForm || state().isTodoEnabled) {
+                    dispatch(AddHabitMessage.OpenNewCreationForm(intent.creationForm))
+                }
             }
 
             is AddHabitIntent.UpdateHabitTitle -> {
@@ -143,6 +154,7 @@ internal class AddHabitExecutor(
             is AddHabitIntent.CreateForm -> {
                 scope.launch {
                     val currentForm = state().creationForm
+                    if (currentForm is AddTodoForm && !state().isTodoEnabled) return@launch
                     if (currentForm is AddTodoForm && currentForm.repeatPeriod.isEmpty()) {
                         publish(AddHabitLabel.CreateTodoRepeatPeriodShouldBeNotEmptyError)
                     } else {

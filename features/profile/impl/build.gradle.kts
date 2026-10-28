@@ -13,6 +13,7 @@ kotlin {
             api(libs.components.resources)
             implementation(projects.features.profile.api)
             implementation(projects.core.utils)
+            implementation(projects.features.debugmenu.api)
         }
     }
 }

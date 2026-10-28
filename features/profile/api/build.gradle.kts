@@ -12,6 +12,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.core.mvi.navigation)
             implementation(projects.core.utils)
+            api(projects.features.debugmenu.api)
         }
     }
 }

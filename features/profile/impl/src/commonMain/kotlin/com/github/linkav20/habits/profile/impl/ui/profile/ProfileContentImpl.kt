@@ -25,7 +25,7 @@ import com.github.linkav20.habits.profile.impl.resources.Res
 import com.github.linkav20.habits.profile.impl.resources.profile_all_habits
 import com.github.linkav20.habits.profile.impl.resources.profile_app_language
 import com.github.linkav20.habits.profile.impl.resources.profile_app_theme
-import com.github.linkav20.habits.profile.impl.resources.profile_feature_flags
+import com.github.linkav20.habits.profile.impl.resources.profile_debug_menu
 import com.github.linkav20.habits.profile.impl.resources.profile_mood_diary
 import com.github.linkav20.habits.profile.impl.resources.profile_production
 import com.github.linkav20.habits.profile.impl.resources.profile_title
@@ -42,6 +42,7 @@ internal class ProfileContentImpl : ProfileContent {
     ) {
         ProfileScreen(
             onBackClick = component::onBackClicked,
+            onDebugMenuClick = component::onDebugMenuClicked,
             modifier = modifier,
         )
     }
@@ -50,6 +51,7 @@ internal class ProfileContentImpl : ProfileContent {
 @Composable
 private fun ProfileScreen(
     onBackClick: () -> Unit,
+    onDebugMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -104,8 +106,8 @@ private fun ProfileScreen(
                     if (currentEnvironment.isDebug) {
                         add(
                             MenuItem(
-                                title = stringResource(Res.string.profile_feature_flags),
-                                action = {},
+                                title = stringResource(Res.string.profile_debug_menu),
+                                action = onDebugMenuClick,
                             ),
                         )
                     }

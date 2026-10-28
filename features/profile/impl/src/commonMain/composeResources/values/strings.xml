@@ -5,7 +5,7 @@
     <string name="profile_mood_diary">Дневник настроения</string>
     <string name="profile_app_theme">Тема приложения</string>
     <string name="profile_app_language">Язык приложения</string>
-    <string name="profile_feature_flags">FeatureFlags</string>
+    <string name="profile_debug_menu">Дебаг меню</string>
     <string name="profile_production">Flinkou Production</string>
     <string name="profile_version">версия %1$s</string>
 </resources>

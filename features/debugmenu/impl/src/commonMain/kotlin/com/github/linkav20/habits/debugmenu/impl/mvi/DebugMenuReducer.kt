@@ -6,6 +6,8 @@ import com.github.linkav20.habits.debugmenu.api.DebugMenuState
 internal class DebugMenuReducer : Reducer<DebugMenuState, DebugMenuMessage> {
     override fun DebugMenuState.reduce(msg: DebugMenuMessage): DebugMenuState =
         when (msg) {
+            is DebugMenuMessage.FeatureFlagsLoaded -> copy(featureFlags = msg.flags)
+            is DebugMenuMessage.FeatureFlagChanged -> copy(featureFlags = featureFlags + (msg.key to msg.enabled))
             is DebugMenuMessage.Data -> copy(
                 isStage = msg.isStage,
                 prodToken = msg.prodToken,

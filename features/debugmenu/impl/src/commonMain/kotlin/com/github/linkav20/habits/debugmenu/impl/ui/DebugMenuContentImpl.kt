@@ -1,5 +1,6 @@
 package com.github.linkav20.habits.debugmenu.impl.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
@@ -19,15 +24,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import com.github.linkav20.habits.core.featureflags.FeatureFlag
 import com.github.linkav20.habits.core.uikit.HabitIcons
 import com.github.linkav20.habits.core.uikit.HabitTheme
+import com.github.linkav20.habits.core.uikit.components.radiobutton.HabitRadioButtonDefaults
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
+import com.github.linkav20.habits.core.uikit.components.switch.HabitSwitch
 import com.github.linkav20.habits.core.uikit.components.topbar.HabitTopBar
 import com.github.linkav20.habits.core.utils.copyToClipboard
 import com.github.linkav20.habits.core.utils.currentEnvironment
@@ -38,11 +47,15 @@ import com.github.linkav20.habits.debugmenu.api.DebugMenuEvent
 import com.github.linkav20.habits.debugmenu.impl.resources.Res
 import com.github.linkav20.habits.debugmenu.impl.resources.debug_menu_title
 import com.github.linkav20.habits.debugmenu.impl.resources.device_id_title
+import com.github.linkav20.habits.debugmenu.impl.resources.feature_flags_title
 import com.github.linkav20.habits.debugmenu.impl.resources.os_version_title
 import com.github.linkav20.habits.debugmenu.impl.resources.prod_value
 import com.github.linkav20.habits.debugmenu.impl.resources.reset_token_config_title
 import com.github.linkav20.habits.debugmenu.impl.resources.stage_value
+import com.github.linkav20.habits.debugmenu.impl.resources.todos_feature_description
 import com.github.linkav20.habits.debugmenu.impl.resources.token_title
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 internal class DebugMenuContentImpl : DebugMenuContent {
     @Composable
@@ -53,8 +66,20 @@ internal class DebugMenuContentImpl : DebugMenuContent {
         val state by component.model.collectAsState()
 
         Scaffold(
+            modifier = modifier,
+            containerColor = HabitTheme.colors.background,
             topBar = {
                 HabitTopBar(
+                    modifier = Modifier
+                        .clip(
+                            HabitTheme.shapes.large.copy(
+                                topStart = CornerSize(0.dp),
+                                topEnd = CornerSize(0.dp),
+                            ),
+                        )
+                        .background(HabitTheme.colors.primaryContainer)
+                        .padding(bottom = 8.dp),
+                    containerColor = HabitTheme.colors.primaryContainer,
                     title = stringResource(Res.string.debug_menu_title),
                     onBackClick = { component.handleAction(DebugMenuEvent.OnBackClick) },
                 )
@@ -63,6 +88,7 @@ internal class DebugMenuContentImpl : DebugMenuContent {
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
+                    .verticalScroll(rememberScrollState())
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
@@ -88,6 +114,43 @@ internal class DebugMenuContentImpl : DebugMenuContent {
                     title = stringResource(Res.string.device_id_title),
                     value = currentEnvironment.deviceId,
                 )
+                Text(
+                    text = stringResource(Res.string.feature_flags_title),
+                    style = HabitTheme.typography.subtitle,
+                )
+                state.featureFlags.forEach { (flag, enabled) ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth().toggleable(
+                            value = enabled,
+                            role = Role.Switch,
+                            onValueChange = {
+                                component.handleAction(DebugMenuEvent.ChangeFeatureFlag(flag, it))
+                            },
+                        ),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = flag.name,
+                                style = HabitTheme.typography.body.copy(fontWeight = FontWeight.Normal),
+                            )
+                            Text(
+                                text = when (flag) {
+                                    FeatureFlag.TODOS_ENABLED -> stringResource(Res.string.todos_feature_description)
+                                },
+                                style = HabitTheme.typography.body,
+                                color = HabitTheme.colors.textSecondary,
+                            )
+                        }
+                        HabitSwitch(
+                            checked = enabled,
+                            // The whole row handles toggling and switch semantics.
+                            enabled = false,
+                            onCheckedChange = {},
+                        )
+                    }
+                }
             }
         }
     }
@@ -115,6 +178,7 @@ private fun EnvironmentBlock(
             style = HabitTheme.typography.bodyAccent,
         )
         RadioButton(
+            colors = HabitRadioButtonDefaults.colors(),
             selected = isBlockSelected,
             onClick = { onChangeEnvironment() },
         )

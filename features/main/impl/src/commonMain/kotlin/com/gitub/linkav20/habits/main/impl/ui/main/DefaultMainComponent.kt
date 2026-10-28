@@ -7,15 +7,15 @@ import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.gitub.linkav20.habits.main.api.communication.GlobalCommunicationEvent
 import com.gitub.linkav20.habits.main.api.domain.model.main.HabitItem
 import com.gitub.linkav20.habits.main.api.domain.model.main.TodoItem
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.StateFlow
-import org.koin.core.component.KoinComponent
 import com.gitub.linkav20.habits.main.api.main.MainComponent
 import com.gitub.linkav20.habits.main.api.main.MainEvent
 import com.gitub.linkav20.habits.main.api.main.MainIntent
 import com.gitub.linkav20.habits.main.api.main.MainStore
 import com.gitub.linkav20.habits.main.impl.communication.GlobalCommunication
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 @OptIn(ExperimentalCoroutinesApi::class)

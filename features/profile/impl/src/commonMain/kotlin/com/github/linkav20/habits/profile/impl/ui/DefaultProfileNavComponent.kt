@@ -5,7 +5,10 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
+import com.github.linkav20.habits.core.utils.currentEnvironment
+import com.github.linkav20.habits.debugmenu.api.DebugMenuComponent
 import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.profile.api.ProfileNavigationChild
 import com.github.linkav20.habits.profile.api.ProfileNavigationConfig
@@ -13,6 +16,7 @@ import com.github.linkav20.habits.profile.api.profile.ProfileComponent
 
 internal class DefaultProfileNavComponent private constructor(
     componentContext: ComponentContext,
+    private val debugMenuComponentFactory: DebugMenuComponent.Factory,
     private val profileComponentFactory: ProfileComponent.Factory,
     private val onBackClick: () -> Unit,
 ) : ProfileNavComponent,
@@ -38,15 +42,26 @@ internal class DefaultProfileNavComponent private constructor(
         config: ProfileNavigationConfig,
         componentContext: ComponentContext,
     ): ProfileNavigationChild = when (config) {
+        ProfileNavigationConfig.DebugMenu -> ProfileNavigationChild.DebugMenu(
+            component = debugMenuComponentFactory.create(
+                componentContext = componentContext,
+                onBackClick = ::onBackClicked,
+                onShowNotification = {},
+            ),
+        )
         ProfileNavigationConfig.Profile -> ProfileNavigationChild.Profile(
             component = profileComponentFactory.create(
                 componentContext = componentContext,
                 onBackClick = ::onBackClicked,
+                onDebugMenuClick = {
+                   navigation.pushNew(ProfileNavigationConfig.DebugMenu)
+                },
             ),
         )
     }
 
     internal class Factory(
+        private val debugMenuComponentFactory: DebugMenuComponent.Factory,
         private val profileComponentFactory: ProfileComponent.Factory,
     ) : ProfileNavComponent.Factory {
         override fun create(
@@ -55,6 +70,7 @@ internal class DefaultProfileNavComponent private constructor(
         ): ProfileNavComponent = DefaultProfileNavComponent(
             componentContext = componentContext,
             profileComponentFactory = profileComponentFactory,
+            debugMenuComponentFactory = debugMenuComponentFactory,
             onBackClick = onBackClick,
         )
     }

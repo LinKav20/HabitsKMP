@@ -15,6 +15,7 @@ kotlin {
             implementation(projects.core.utils)
             implementation(projects.core.network)
             implementation(projects.core.datastore)
+            implementation(projects.core.featureflags)
         }
     }
 }

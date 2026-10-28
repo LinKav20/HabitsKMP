@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -31,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.github.linkav20.habits.core.uikit.HabitIcons
 import com.github.linkav20.habits.core.uikit.HabitImages
 import com.github.linkav20.habits.core.uikit.HabitTheme
+import com.github.linkav20.habits.core.uikit.components.radiobutton.HabitRadioButtonDefaults
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
 import com.github.linkav20.habits.core.uikit.components.button.HabitButtonSize
 import com.github.linkav20.habits.core.utils.fullMonthWithDay
@@ -240,13 +240,10 @@ private fun CheckingItem(
             }
         }
         RadioButton(
+            colors = HabitRadioButtonDefaults.colors(),
             modifier = Modifier.padding(end = 18.dp),
             selected = isDone,
             onClick = onCheckItemClick,
-            colors = RadioButtonDefaults.colors().copy(
-                selectedColor = HabitTheme.colors.borderAccentPrimary,
-                unselectedColor = HabitTheme.colors.borderBasic,
-            ),
         )
     }
 }

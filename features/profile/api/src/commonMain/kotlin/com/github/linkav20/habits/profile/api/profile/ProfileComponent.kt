@@ -5,12 +5,15 @@ import com.arkivanov.decompose.ComponentContext
 
 @Stable
 interface ProfileComponent {
+    fun onDebugMenuClicked()
+
     fun onBackClicked()
 
     interface Factory {
         fun create(
             componentContext: ComponentContext,
             onBackClick: () -> Unit,
+            onDebugMenuClick: () -> Unit,
         ): ProfileComponent
     }
 }

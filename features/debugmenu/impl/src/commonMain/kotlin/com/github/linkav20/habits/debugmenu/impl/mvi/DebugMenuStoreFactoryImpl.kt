@@ -2,11 +2,11 @@ package com.github.linkav20.habits.debugmenu.impl.mvi
 
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import com.github.linkav20.habits.debugmenu.api.DebugMenuIntent
 import com.github.linkav20.habits.debugmenu.api.DebugMenuLabel
 import com.github.linkav20.habits.debugmenu.api.DebugMenuState
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 internal class DebugMenuStoreFactoryImpl(
     private val storeFactory: StoreFactory,
@@ -27,6 +27,8 @@ internal class DebugMenuStoreFactoryImpl(
                     DebugMenuExecutor(
                         onShowNotification = onShowNotification,
                         settingsStorage = get(),
+                        setFeatureFlagUseCase = get(),
+                        getFeatureFlagsUseCase = get(),
                     )
                 },
                 reducer = DebugMenuReducer(),
