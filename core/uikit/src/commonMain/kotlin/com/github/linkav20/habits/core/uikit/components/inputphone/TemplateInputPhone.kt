@@ -56,7 +56,7 @@ import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.components.input.TemplateInputFieldColors
 import com.github.linkav20.habits.core.uikit.components.input.TemplateTextFieldDefaults
 import com.github.linkav20.habits.core.uikit.resources.Res
-import com.github.linkav20.habits.core.uikit.resources.ic_24_cross
+import com.github.linkav20.habits.core.uikit.resources.ic_24_cross_vector
 import com.github.linkav20.habits.core.uikit.resources.input_field_clear_button
 import com.github.linkav20.habits.core.uikit.resources.phone_input_field_country
 import com.github.linkav20.habits.core.uikit.resources.phone_input_field_drop_down_arrow
@@ -307,7 +307,7 @@ private fun CountyContent(
     ) {
         AsyncFlag(imageUrl = selectedCountry.image)
         Icon(
-            painter = painterResource(Res.drawable.ic_24_cross),
+            painter = painterResource(Res.drawable.ic_24_cross_vector),
             tint = color,
             contentDescription = stringResource(Res.string.phone_input_field_drop_down_arrow),
         )
@@ -329,7 +329,7 @@ private fun BaseTrailingItem(
             },
         ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_24_cross),
+                painter = painterResource(Res.drawable.ic_24_cross_vector),
                 tint = borderColor,
                 contentDescription = stringResource(Res.string.input_field_clear_button),
             )

@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.github.linkav20.habits.core.uikit.HabitIcons
 import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.resources.Res
-import com.github.linkav20.habits.core.uikit.resources.ic_24_cross
+import com.github.linkav20.habits.core.uikit.resources.ic_24_cross_vector
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -127,7 +127,7 @@ internal fun TemplateSnackBarItem(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
-                    painter = painterResource(Res.drawable.ic_24_cross),
+                    painter = painterResource(Res.drawable.ic_24_cross_vector),
                     contentDescription = null,
                     tint = HabitTheme.colors.iconPrimary,
                     modifier = Modifier

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+    <title>Добавление</title>
+    <path d="M7.45 20.25C4.5 18.7 2.7 15.55 2.7 12.05C2.7 6.85 6.85 2.7 12.05 2.7C17.25 2.7 21.4 6.85 21.4 12.05C21.4 16.35 18.65 19.95 14.85 21.05C13 21.6 12 20.75 12 18.7V16.7" />
+    <path fill="#000000" stroke="none" d="M11.1 7.45a.9.9 0 0 1 1.8 0v3.05q0 .6.6.6h3.05a.9.9 0 0 1 0 1.8H13.5q-.6 0-.6.6v5.3h-1.8v-5.3q0-.6-.6-.6H7.45a.9.9 0 0 1 0-1.8h3.05q.6 0 .6-.6Z" />
+</svg>

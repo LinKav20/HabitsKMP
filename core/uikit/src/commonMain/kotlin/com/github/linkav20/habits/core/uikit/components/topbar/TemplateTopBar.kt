@@ -20,7 +20,7 @@ import com.github.linkav20.habits.core.uikit.HabitIcons
 import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.components.input.HabitInputField
 import com.github.linkav20.habits.core.uikit.resources.Res
-import com.github.linkav20.habits.core.uikit.resources.ic_24_search
+import com.github.linkav20.habits.core.uikit.resources.ic_24_search_vector
 import com.github.linkav20.habits.core.uikit.resources.search_placeholder_top_bar
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -137,7 +137,7 @@ private fun TemplateTopBarTitle(
                 onValueChange = search.onValueChanged,
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(Res.drawable.ic_24_search),
+                        painter = painterResource(Res.drawable.ic_24_search_vector),
                         tint = HabitTheme.colors.iconPrimary,
                         contentDescription = null,
                     )

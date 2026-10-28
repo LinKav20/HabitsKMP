@@ -25,8 +25,8 @@ import com.github.linkav20.habits.core.uikit.components.input.InputFieldStructur
 import com.github.linkav20.habits.core.uikit.components.input.TemplateInputFieldColors
 import com.github.linkav20.habits.core.uikit.components.input.TemplateTextFieldDefaults
 import com.github.linkav20.habits.core.uikit.resources.Res
-import com.github.linkav20.habits.core.uikit.resources.ic_24_cross
-import com.github.linkav20.habits.core.uikit.resources.ic_24_search
+import com.github.linkav20.habits.core.uikit.resources.ic_24_cross_vector
+import com.github.linkav20.habits.core.uikit.resources.ic_24_search_vector
 import com.github.linkav20.habits.core.uikit.resources.input_field_clear_button
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -74,7 +74,7 @@ fun TemplateSearchBox(
                 singleLine = true,
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(Res.drawable.ic_24_search),
+                        painter = painterResource(Res.drawable.ic_24_search_vector),
                         tint = borderColor,
                         contentDescription = null,
                     )
@@ -88,7 +88,7 @@ fun TemplateSearchBox(
                             },
                         ) {
                             Icon(
-                                painter = painterResource(Res.drawable.ic_24_cross),
+                                painter = painterResource(Res.drawable.ic_24_cross_vector),
                                 tint = borderColor,
                                 contentDescription = stringResource(Res.string.input_field_clear_button),
                             )
