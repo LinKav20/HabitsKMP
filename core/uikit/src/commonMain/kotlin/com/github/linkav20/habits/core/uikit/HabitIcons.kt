@@ -46,14 +46,9 @@ object HabitIcons {
     val Filter_24 = Res.drawable.ic_24_filter_vector
     val Sort_24 = Res.drawable.ic_24_sort_vector
     val Tracker_24 = Res.drawable.ic_24_tracker_vector
-
     val ItemDone_24 = CheckFilled_24
     val ItemFailed_24 = Res.drawable.ic_24_item_fail_vector
     val ItemPlanned_24 = Res.drawable.ic_24_item_planned_todo_vector
-
-    val ItemDone_20 = ItemDone_24
-    val ItemFailed_20 = ItemFailed_24
-    val ItemPlanned_20 = ItemPlanned_24
 
     val Calendar_24 = Res.drawable.ic_24_calendar_vector
 }

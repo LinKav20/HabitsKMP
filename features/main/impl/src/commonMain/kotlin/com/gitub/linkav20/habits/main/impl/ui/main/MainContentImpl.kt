@@ -854,35 +854,35 @@ private fun HabitsWithCompletion(
                                     if (it.second != null) {
                                         if (it.second == true) {
                                             Icon(
-                                                painter = painterResource(HabitIcons.ItemDone_20),
+                                                painter = painterResource(HabitIcons.ItemDone_24),
                                                 contentDescription = null,
                                                 tint = HabitTheme.colors.iconAccentPrimary,
-                                                modifier = Modifier.size(20.dp).clickable {
+                                                modifier = Modifier.size(24.dp).clickable {
                                                     onCheckItemClick(item.item, it.first)
                                                 },
                                             )
                                         } else {
                                             Icon(
-                                                painter = painterResource(HabitIcons.ItemFailed_20),
+                                                painter = painterResource(HabitIcons.ItemFailed_24),
                                                 contentDescription = null,
                                                 tint = HabitTheme.colors.iconAccentPrimary,
-                                                modifier = Modifier.size(20.dp).clickable {
+                                                modifier = Modifier.size(24.dp).clickable {
                                                     onCheckItemClick(item.item, it.first)
                                                 },
                                             )
                                         }
                                     } else if (it.first.dayOfWeek in item.item.daysForHabit) {
                                         Icon(
-                                            painter = painterResource(HabitIcons.ItemPlanned_20),
+                                            painter = painterResource(HabitIcons.ItemPlanned_24),
                                             contentDescription = null,
                                             tint = HabitTheme.colors.iconAccentPrimary,
-                                            modifier = Modifier.size(20.dp).clickable {
+                                            modifier = Modifier.size(24.dp).clickable {
                                                 onCheckItemClick(item.item, it.first)
                                             },
                                         )
                                     } else {
                                         Box(
-                                            modifier = Modifier.size(20.dp).clickable {
+                                            modifier = Modifier.size(24.dp).clickable {
                                                 onCheckItemClick(item.item, it.first)
                                             },
                                         )
