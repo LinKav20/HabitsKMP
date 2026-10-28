@@ -1,16 +1,14 @@
 package com.gitub.linkav20.habits.main.impl.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.github.linkav20.habits.core.uikit.components.animator.templateBackAnimation
 import com.github.linkav20.habits.createitem.api.AddHabitContent
 import com.github.linkav20.habits.habit.api.HabitContent
+import com.github.linkav20.habits.profile.api.ProfileNavContent
 import com.github.linkav20.habits.todo.api.TodoContent
 import com.gitub.linkav20.habits.main.api.main.MainContent
 import com.gitub.linkav20.habits.main.api.MainNavComponent
@@ -67,12 +65,11 @@ internal class MainNavContentImpl : MainNavContent {
                 }
 
                 is MainNavigationChild.Profile -> {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Text(
-                            text = "No implementation yet",
-                            modifier = Modifier.align(Alignment.Center),
+                    koinInject<ProfileNavContent>()
+                        .Content(
+                            component = instance.component,
+                            modifier = Modifier,
                         )
-                    }
                 }
             }
         }

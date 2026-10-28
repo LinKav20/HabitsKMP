@@ -11,12 +11,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.components.resources)
-            implementation(projects.features.main.api)
+            implementation(projects.features.profile.api)
             implementation(projects.core.utils)
-            implementation(projects.core.network)
-            implementation(projects.core.datastore)
-            implementation(libs.emoji.kt)
-            implementation(libs.emoji.compose.m3)
         }
     }
 }

@@ -1,12 +1,14 @@
 package com.github.linkav20.habits.core.utils
 
+import android.content.pm.ApplicationInfo
 import android.os.Build
+import splitties.init.appCtx
 
 public actual val currentEnvironment: Environment = AndroidEnvironment
 
 public object AndroidEnvironment : Environment {
     override val isDebug: Boolean
-        get() = true // todo
+        get() = (appCtx.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
 
     override val clientType: String = CLIENT_TYPE_ANDROID
 

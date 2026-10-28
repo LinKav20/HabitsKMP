@@ -25,6 +25,9 @@ kotlin {
             implementation(projects.features.main.api)
             implementation(projects.features.main.impl)
 
+            implementation(projects.features.profile.api)
+            implementation(projects.features.profile.impl)
+
             implementation(projects.features.createitem.api)
             implementation(projects.features.createitem.impl)
 

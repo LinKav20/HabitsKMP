@@ -10,6 +10,7 @@ import com.github.linkav20.habits.datastore.di.dataStoreModule
 import com.github.linkav20.habits.debugmenu.impl.di.debugMenuFeatureModule
 import com.github.linkav20.habits.habit.impl.di.createHabitFeatureModule
 import com.github.linkav20.habits.network.di.networkModule
+import com.github.linkav20.habits.profile.impl.di.profileFeatureModule
 import com.github.linkav20.habits.todo.impl.di.createTodoFeatureModule
 import com.gitub.linkav20.habits.main.impl.di.mainFeatureModule
 
@@ -19,6 +20,7 @@ fun initKoin(externalModules: List<Module> = emptyList()) {
             authFeatureModule(),
             debugMenuFeatureModule(),
             mainFeatureModule(),
+            profileFeatureModule(),
             createItemFeatureModule(),
             utilsModule(),
             createHabitFeatureModule(),

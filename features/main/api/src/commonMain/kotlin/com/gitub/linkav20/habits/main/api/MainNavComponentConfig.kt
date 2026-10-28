@@ -3,6 +3,7 @@ package com.gitub.linkav20.habits.main.api
 import com.github.linkav20.habits.core.mvi.navigation.BaseNavigationConfig
 import com.github.linkav20.habits.createitem.api.AddHabitComponent
 import com.github.linkav20.habits.habit.api.HabitComponent
+import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.todo.api.TodoComponent
 import com.gitub.linkav20.habits.main.api.main.MainComponent
 import kotlinx.serialization.Serializable
@@ -14,6 +15,7 @@ sealed interface MainNavigationConfig : BaseNavigationConfig {
         override val screenName: String = "main_screen"
     }
 
+    @Serializable
     data object Profile : MainNavigationConfig {
         override val screenName: String = "profile"
     }
@@ -40,7 +42,9 @@ sealed class MainNavigationChild {
         val component: MainComponent,
     ) : MainNavigationChild()
 
-    data object Profile : MainNavigationChild()
+    data class Profile(
+        val component: ProfileNavComponent,
+    ) : MainNavigationChild()
 
     data class AddItem(
         val component: AddHabitComponent,

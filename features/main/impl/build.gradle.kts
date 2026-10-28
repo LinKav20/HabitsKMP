@@ -15,6 +15,7 @@ kotlin {
             implementation(projects.features.createitem.api)
             implementation(projects.features.habit.api)
             implementation(projects.features.todo.api)
+            implementation(projects.features.profile.api)
 
             implementation(projects.core.featureflags)
             implementation(projects.core.utils)

@@ -10,6 +10,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.github.linkav20.habits.createitem.api.AddHabitComponent
 import com.github.linkav20.habits.habit.api.HabitComponent
+import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.todo.api.TodoComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.core.component.KoinComponent
@@ -29,6 +30,7 @@ internal class DefaultMainNavComponent private constructor(
     private val addHabitComponentFactory: AddHabitComponent.Factory,
     private val habitComponentFactory: HabitComponent.Factory,
     private val todoComponentFactory: TodoComponent.Factory,
+    private val profileNavComponentFactory: ProfileNavComponent.Factory,
     private val globalCourseCommunication: GlobalCommunication,
 ) : MainNavComponent,
     ComponentContext by componentContext {
@@ -83,7 +85,12 @@ internal class DefaultMainNavComponent private constructor(
                 )
             }
 
-            is MainNavigationConfig.Profile -> MainNavigationChild.Profile
+            is MainNavigationConfig.Profile -> MainNavigationChild.Profile(
+                component = profileNavComponentFactory.create(
+                    componentContext = childComponentContext,
+                    onBackClick = ::onBackClicked,
+                ),
+            )
 
             is MainNavigationConfig.AddItem -> {
                 MainNavigationChild.AddItem(
@@ -130,6 +137,7 @@ internal class DefaultMainNavComponent private constructor(
                 addHabitComponentFactory = get(),
                 habitComponentFactory = get(),
                 todoComponentFactory = get(),
+                profileNavComponentFactory = get(),
                 globalCourseCommunication = get(),
             )
         }
