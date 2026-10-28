@@ -12,6 +12,7 @@ kotlin {
         commonMain.dependencies {
             api(libs.components.resources)
             implementation(projects.features.createitem.api)
+            implementation(projects.core.featureflags)
             implementation(projects.core.utils)
             implementation(projects.core.database)
             implementation(projects.core.network)

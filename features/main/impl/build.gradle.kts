@@ -16,6 +16,7 @@ kotlin {
             implementation(projects.features.habit.api)
             implementation(projects.features.todo.api)
 
+            implementation(projects.core.featureflags)
             implementation(projects.core.utils)
             implementation(projects.core.database)
             implementation(projects.core.network)

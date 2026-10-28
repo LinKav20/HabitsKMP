@@ -1,5 +1,6 @@
 package com.gitub.linkav20.habits.main.impl.data
 
+import com.github.linkav20.habits.core.featureflags.FeatureFlags
 import com.github.linkav20.habits.core.utils.runCatchingCancellable
 import com.github.linkav20.habits.database.habits.dao.CompletionDao
 import com.github.linkav20.habits.database.habits.dao.HabitsDao
@@ -26,8 +27,10 @@ class ItemsRepositoryImpl(
             val habits = habitsDao.getActiveHabitsOnDate(startDate.toString()).map {
                 it.toDomain()
             }
-            val todos = todoDao.getActiveTodosOnDate().map {
-                it.toDomain()
+            val todos = if (FeatureFlags.TODOS_ENABLED) {
+                todoDao.getActiveTodosOnDate().map { it.toDomain() }
+            } else {
+                emptyList()
             }
             habits + todos
         }

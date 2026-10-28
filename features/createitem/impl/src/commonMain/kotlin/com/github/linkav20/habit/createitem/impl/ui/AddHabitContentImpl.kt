@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.github.linkav20.habit.createitem.impl.ui.elements.AddHabitFromContent
 import com.github.linkav20.habit.createitem.impl.ui.elements.AddTodoFromContent
+import com.github.linkav20.habits.core.featureflags.FeatureFlags
 import com.github.linkav20.habits.core.uikit.HabitTheme
 import com.github.linkav20.habits.core.uikit.components.button.HabitButton
 import com.github.linkav20.habits.core.uikit.components.button.HabitButtonState
@@ -163,7 +164,7 @@ private fun TopBar(
             onBackClick = onBackClick,
         )
         Box(
-            modifier = Modifier.background(
+            modifier = Modifier.fillMaxWidth().background(
                 color = HabitTheme.colors.background,
                 shape = HabitTheme.shapes.large.copy(
                     topStart = CornerSize(0.dp),
@@ -180,25 +181,27 @@ private fun TopBar(
                 bottom = 18.dp,
             ),
         ) {
-            val habitTab = stringResource(Res.string.add_habit_habit_tab_title)
-            val todoTab = stringResource(Res.string.add_habit_todo_tab_title)
-            HabitSegmentedButton(
-                selectedOption = when (selectedTab) {
-                    is AddHabitForm -> habitTab
-                    is AddTodoForm -> todoTab
-                },
-                options = setOf(
-                    todoTab,
-                    habitTab,
-                ),
-                onOptionSelected = {
-                    when (it) {
-                        todoTab -> onTabChange(AddTodoForm())
-                        habitTab -> onTabChange(AddHabitForm())
-                    }
-                },
-                type = Type.OUTLINE,
-            )
+            if (FeatureFlags.TODOS_ENABLED) {
+                val habitTab = stringResource(Res.string.add_habit_habit_tab_title)
+                val todoTab = stringResource(Res.string.add_habit_todo_tab_title)
+                HabitSegmentedButton(
+                    selectedOption = when (selectedTab) {
+                        is AddHabitForm -> habitTab
+                        is AddTodoForm -> todoTab
+                    },
+                    options = setOf(
+                        todoTab,
+                        habitTab,
+                    ),
+                    onOptionSelected = {
+                        when (it) {
+                            todoTab -> onTabChange(AddTodoForm())
+                            habitTab -> onTabChange(AddHabitForm())
+                        }
+                    },
+                    type = Type.OUTLINE,
+                )
+            }
         }
     }
 }
