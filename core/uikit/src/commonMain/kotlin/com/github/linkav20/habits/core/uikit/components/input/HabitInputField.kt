@@ -42,6 +42,12 @@ import com.github.linkav20.habits.core.uikit.resources.input_field_clear_button
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+enum class HabitInputFieldStyle {
+    UNDERLINED,
+    BORDERED,
+    PLAIN,
+}
+
 @Suppress("LongParameterList")
 @Composable
 fun HabitInputField(
@@ -56,7 +62,7 @@ fun HabitInputField(
     singleLine: Boolean = true,
     errorText: String? = null,
     isLoading: Boolean = false,
-    bordered: Boolean = false,
+    style: HabitInputFieldStyle = HabitInputFieldStyle.UNDERLINED,
     placeholder: String = "",
     placeholderMaxLines: Int = Int.MAX_VALUE,
     leadingIcon: @Composable ((borderColor: Color) -> Unit)? = null,
@@ -131,7 +137,7 @@ fun HabitInputField(
                     .focusProperties { canFocus = !isReadOnly }
                     .clip(shape = HabitTheme.shapes.medium)
                     .then(
-                        if (bordered) {
+                        if (style == HabitInputFieldStyle.BORDERED) {
                             Modifier.border(
                                 border = BorderStroke(1.dp, borderColor),
                                 shape = HabitTheme.shapes.medium,
@@ -153,6 +159,7 @@ fun HabitInputField(
         isReadOnly = isReadOnly,
         errorText = errorText,
         colors = colors,
+        style = style,
     )
 }
 
@@ -202,11 +209,12 @@ internal fun InputFieldStructure(
     isReadOnly: Boolean = false,
     errorText: String? = null,
     colors: TemplateInputFieldColors = TemplateTextFieldDefaults.colors(),
+    style: HabitInputFieldStyle = HabitInputFieldStyle.PLAIN,
 ) {
     Column(
         modifier = modifier,
     ) {
-        textFieldContent(colors.asTextFieldColors(isReadOnly = isReadOnly))
+        textFieldContent(colors.asTextFieldColors(isReadOnly = isReadOnly, style = style))
 
         if (isError && !errorText.isNullOrEmpty()) {
             Text(

@@ -18,12 +18,12 @@ object TemplateTextFieldDefaults {
         errorLabelColor: Color = HabitTheme.colors.textError,
         enabledPlaceholderColor: Color = enabledLabelColor,
         disabledPlaceholderColor: Color = disabledLabelColor,
-        focusedBorderColor: Color = HabitTheme.colors.primary,
+        focusedBorderColor: Color = HabitTheme.colors.borderAccentPrimary,
         unfocusedBorderColor: Color = HabitTheme.colors.borderBasic,
         disabledBorderColor: Color = unfocusedBorderColor,
         errorBolderColor: Color = HabitTheme.colors.borderError,
         backgroundColor: Color = HabitTheme.colors.backgroundTertiary,
-        cursorColor: Color = enabledTextColor,
+        cursorColor: Color = HabitTheme.colors.textAccentPrimary,
         disabledBackgroundColor: Color = HabitTheme.colors.backgroundTertiary,
         errorCursorColor: Color = HabitTheme.colors.textError,
     ): TemplateInputFieldColors {
@@ -68,7 +68,10 @@ data class TemplateInputFieldColors(
     val errorCursorColor: Color,
 ) {
     @Composable
-    fun asTextFieldColors(isReadOnly: Boolean = false): TextFieldColors {
+    fun asTextFieldColors(
+        isReadOnly: Boolean = false,
+        style: HabitInputFieldStyle = HabitInputFieldStyle.PLAIN,
+    ): TextFieldColors {
         return TextFieldDefaults.colors(
             focusedTextColor = focusedTextColor,
             unfocusedTextColor = if (isReadOnly) enabledLabelColor else unfocusedTextColor,
@@ -86,7 +89,11 @@ data class TemplateInputFieldColors(
             disabledContainerColor = disabledBackgroundColor,
             cursorColor = cursorColor,
             errorCursorColor = errorCursorColor,
-            focusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = if (style == HabitInputFieldStyle.UNDERLINED && !isReadOnly) {
+                focusedBorderColor
+            } else {
+                Color.Transparent
+            },
             unfocusedIndicatorColor = Color.Transparent,
             errorIndicatorColor = Color.Transparent,
         )
