@@ -9,6 +9,16 @@
     <string name="search_placeholder_top_bar">Search by resources or sections</string>
 
     <string name="choose_emoji_title">Choose emoji</string>
+    <string name="emoji_category_habits">For habits</string>
+    <string name="emoji_category_smileys">Smileys &amp; emotion</string>
+    <string name="emoji_category_people">People &amp; body</string>
+    <string name="emoji_category_nature">Animals &amp; nature</string>
+    <string name="emoji_category_food">Food &amp; drink</string>
+    <string name="emoji_category_places">Travel &amp; places</string>
+    <string name="emoji_category_activities">Activities</string>
+    <string name="emoji_category_objects">Objects</string>
+    <string name="emoji_category_symbols">Symbols</string>
+    <string name="emoji_category_flags">Flags</string>
 
     <!-- Errors -->
     <string name="error_not_found_title">Page not found</string>

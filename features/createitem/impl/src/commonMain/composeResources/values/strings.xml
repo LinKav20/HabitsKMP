@@ -6,6 +6,7 @@
     <string name="add_habit_repeat_days_title">Дни повторения</string>
     <string name="add_habit_endless_title">Бесконечная привычка</string>
     <string name="add_habit_habit_title_placeholder">Название привычки</string>
+    <string name="add_habit_choose_emoji">Выбрать эмодзи привычки</string>
     <string name="add_habit_endless_days_until_end">Дней до конца</string>
     <string name="add_habit_endless_days_until_end_placeholder">Дней до конца</string>
     <string name="add_habit_endless_completion_day">День окончания</string>

@@ -6,6 +6,7 @@
     <string name="add_habit_repeat_days_title">Repeat days</string>
     <string name="add_habit_endless_title">Endless habit</string>
     <string name="add_habit_habit_title_placeholder">Name of habit</string>
+    <string name="add_habit_choose_emoji">Choose habit emoji</string>
     <string name="add_habit_endless_days_until_end">Days until end</string>
     <string name="add_habit_endless_days_until_end_placeholder">Days until end</string>
     <string name="add_habit_endless_completion_day">Completion day</string>

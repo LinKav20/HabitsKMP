@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +22,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +38,7 @@ import com.github.linkav20.habits.core.uikit.emojipicker.EmojiPicker
 import com.github.linkav20.habits.core.utils.Time
 import com.github.linkav20.habits.createitem.api.model.AddHabitForm
 import com.github.linkav20.habits.createitem.impl.resources.Res
+import com.github.linkav20.habits.createitem.impl.resources.add_habit_choose_emoji
 import com.github.linkav20.habits.createitem.impl.resources.add_habit_endless_completion_day
 import com.github.linkav20.habits.createitem.impl.resources.add_habit_endless_days_until_end
 import com.github.linkav20.habits.createitem.impl.resources.add_habit_endless_days_until_end_placeholder
@@ -58,7 +61,8 @@ fun AddHabitFromContent(
     onHabitEmojiChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var showEmojiDialog by rememberSaveable { mutableStateOf(false) }
+    var showEmojiSheet by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
     Box(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -69,7 +73,10 @@ fun AddHabitFromContent(
                 title = habitForm.title,
                 emoji = habitForm.emoji,
                 onTitleUpdated = onHabitTitleChanged,
-                onOpenEmojiPicker = { showEmojiDialog = true },
+                onOpenEmojiPicker = {
+                    focusManager.clearFocus()
+                    showEmojiSheet = true
+                },
             )
             HabitFormRepeatDays(
                 repeatDays = habitForm.repeatDays,
@@ -80,15 +87,14 @@ fun AddHabitFromContent(
                 onDeadlineUpdated = onHabitDeadlineChanged,
             )
         }
-        if (showEmojiDialog) {
+        if (showEmojiSheet) {
             EmojiPicker(
-                modifier = Modifier.size(300.dp),
                 onSelectEmoji = {
                     onHabitEmojiChanged(it)
-                    showEmojiDialog = false
+                    showEmojiSheet = false
                 },
                 selectedEmoji = habitForm.emoji,
-                onClose = { showEmojiDialog = false },
+                onClose = { showEmojiSheet = false },
             )
         }
     }
@@ -209,6 +215,7 @@ private fun HabitFormTitle(
     onTitleUpdated: (String) -> Unit,
     onOpenEmojiPicker: () -> Unit,
 ) {
+    val chooseEmojiLabel = stringResource(Res.string.add_habit_choose_emoji)
     Box {
         Row(
             modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
@@ -225,14 +232,19 @@ private fun HabitFormTitle(
                 modifier = Modifier
                     .aspectRatio(1f)
                     .fillMaxHeight()
+                    .clip(HabitTheme.shapes.medium)
                     .background(
                         color = HabitTheme.colors.backgroundTertiary,
                         shape = HabitTheme.shapes.medium,
+                    )
+                    .clickable(
+                        role = Role.Button,
+                        onClickLabel = chooseEmojiLabel,
+                        onClick = onOpenEmojiPicker,
                     ),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    modifier = Modifier.clickable { onOpenEmojiPicker() },
                     text = emoji,
                     style = HabitTheme.typography.subtitle,
                 )

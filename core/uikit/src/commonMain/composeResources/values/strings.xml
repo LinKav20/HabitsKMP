@@ -9,6 +9,16 @@
     <string name="search_placeholder_top_bar">Поиск по ресурсам или разделам</string>
 
     <string name="choose_emoji_title">Выберите эмодзи</string>
+    <string name="emoji_category_habits">Для привычек</string>
+    <string name="emoji_category_smileys">Смайлики и эмоции</string>
+    <string name="emoji_category_people">Люди и тело</string>
+    <string name="emoji_category_nature">Животные и природа</string>
+    <string name="emoji_category_food">Еда и напитки</string>
+    <string name="emoji_category_places">Путешествия и места</string>
+    <string name="emoji_category_activities">Занятия</string>
+    <string name="emoji_category_objects">Предметы</string>
+    <string name="emoji_category_symbols">Символы</string>
+    <string name="emoji_category_flags">Флаги</string>
 
     <!-- Errors -->
     <string name="error_not_found_title">Страница не найдена</string>
