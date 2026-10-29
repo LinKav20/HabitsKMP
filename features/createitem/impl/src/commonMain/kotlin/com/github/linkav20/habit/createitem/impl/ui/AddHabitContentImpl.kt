@@ -158,31 +158,28 @@ private fun TopBar(
     onTabChange: (CreationForm) -> Unit,
     onBackClick: () -> Unit,
 ) {
-    Column {
+    val shape = HabitTheme.shapes.large.copy(
+        topStart = CornerSize(0.dp),
+        topEnd = CornerSize(0.dp),
+    )
+    Column(
+        modifier = Modifier
+            .background(HabitTheme.colors.background, shape)
+            .clip(shape),
+    ) {
         HabitCenterTopBar(
             containerColor = HabitTheme.colors.background,
             title = stringResource(Res.string.add_habit_title),
             onBackClick = onBackClick,
         )
-        Box(
-            modifier = Modifier.fillMaxWidth().background(
-                color = HabitTheme.colors.background,
-                shape = HabitTheme.shapes.large.copy(
-                    topStart = CornerSize(0.dp),
-                    topEnd = CornerSize(0.dp),
+        if (isTodoEnabled) {
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(
+                    start = 26.dp,
+                    end = 26.dp,
+                    bottom = 18.dp,
                 ),
-            ).clip(
-                HabitTheme.shapes.large.copy(
-                    topStart = CornerSize(0.dp),
-                    topEnd = CornerSize(0.dp),
-                ),
-            ).padding(
-                start = 26.dp,
-                end = 26.dp,
-                bottom = 18.dp,
-            ),
-        ) {
-            if (isTodoEnabled) {
+            ) {
                 val habitTab = stringResource(Res.string.add_habit_habit_tab_title)
                 val todoTab = stringResource(Res.string.add_habit_todo_tab_title)
                 HabitSegmentedButton(
