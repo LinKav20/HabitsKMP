@@ -11,7 +11,13 @@ import com.github.linkav20.habits.profile.impl.ui.profile.ProfileContentImpl
 import org.koin.dsl.module
 
 fun profileFeatureModule() = module {
-    factory<ProfileNavComponent.Factory> { DefaultProfileNavComponent.Factory(get(), get()) }
+    factory<ProfileNavComponent.Factory> {
+        DefaultProfileNavComponent.Factory(
+            get(),
+            get(),
+            get(),
+        )
+    }
     factory<ProfileNavContent> { ProfileNavContentImpl() }
     factory<ProfileComponent.Factory> { DefaultProfileComponent.Factory() }
     factory<ProfileContent> { ProfileContentImpl() }

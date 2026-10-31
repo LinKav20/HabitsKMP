@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.github.linkav20.habits.core.uikit.components.animator.templateBackAnimation
 import com.github.linkav20.habits.debugmenu.api.DebugMenuContent
+import com.github.linkav20.habits.habit.api.HabitNavContent
 import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.profile.api.ProfileNavContent
 import com.github.linkav20.habits.profile.api.ProfileNavigationChild
@@ -27,6 +28,10 @@ internal class ProfileNavContentImpl : ProfileNavContent {
             ),
         ) {
             when (val instance = it.instance) {
+                is ProfileNavigationChild.Habits -> koinInject<HabitNavContent>().Content(
+                    component = instance.component,
+                    modifier = Modifier,
+                )
                 is ProfileNavigationChild.DebugMenu -> koinInject<DebugMenuContent>().Content(
                     component = instance.component,
                     modifier = Modifier,

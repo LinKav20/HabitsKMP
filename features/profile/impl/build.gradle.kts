@@ -11,6 +11,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.components.resources)
+            implementation(projects.features.habit.api)
             implementation(projects.features.profile.api)
             implementation(projects.core.utils)
             implementation(projects.features.debugmenu.api)

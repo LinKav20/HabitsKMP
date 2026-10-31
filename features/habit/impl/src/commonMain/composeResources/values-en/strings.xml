@@ -1,0 +1,7 @@
+<resources>
+    <string name="habit_list_title">Habits</string>
+    <string name="habit_list_empty">No habits yet</string>
+    <string name="habit_list_error">Could not load habits</string>
+    <string name="habit_list_retry">Retry</string>
+    <string name="habit_title">Habit</string>
+</resources>

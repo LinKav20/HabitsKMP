@@ -9,7 +9,7 @@ import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.github.linkav20.habits.createitem.api.AddHabitComponent
-import com.github.linkav20.habits.habit.api.HabitComponent
+import com.github.linkav20.habits.habit.api.detail.HabitComponent
 import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.todo.api.TodoComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -42,6 +42,7 @@ internal class ProfileContentImpl : ProfileContent {
     ) {
         ProfileScreen(
             onBackClick = component::onBackClicked,
+            onAllHabitsClick = component::onAllHabitsClicked,
             onDebugMenuClick = component::onDebugMenuClicked,
             modifier = modifier,
         )
@@ -51,6 +52,7 @@ internal class ProfileContentImpl : ProfileContent {
 @Composable
 private fun ProfileScreen(
     onBackClick: () -> Unit,
+    onAllHabitsClick: () -> Unit,
     onDebugMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -81,7 +83,7 @@ private fun ProfileScreen(
                 items = listOf(
                     MenuItem(
                         title = stringResource(Res.string.profile_all_habits),
-                        action = {},
+                        action = onAllHabitsClick,
                     ),
                     MenuItem(
                         title = stringResource(Res.string.profile_mood_diary),

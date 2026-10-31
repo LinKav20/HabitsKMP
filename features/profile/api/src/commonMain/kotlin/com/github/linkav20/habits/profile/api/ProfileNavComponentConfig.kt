@@ -8,6 +8,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface ProfileNavigationConfig : BaseNavigationConfig {
     @Serializable
+    data object Habits : ProfileNavigationConfig {
+        override val screenName = "all_habits"
+    }
+
+    @Serializable
     data object DebugMenu : ProfileNavigationConfig {
         override val screenName: String = "debug_menu_screen"
     }
@@ -19,6 +24,8 @@ sealed interface ProfileNavigationConfig : BaseNavigationConfig {
 }
 
 sealed class ProfileNavigationChild {
+    data class Habits(val component: com.github.linkav20.habits.habit.api.HabitNavComponent) : ProfileNavigationChild()
+
     data class DebugMenu(val component: DebugMenuComponent) : ProfileNavigationChild()
 
     data class Profile(

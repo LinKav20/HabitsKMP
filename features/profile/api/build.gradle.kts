@@ -11,6 +11,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.core.mvi.navigation)
+            api(projects.features.habit.api)
             implementation(projects.core.utils)
             api(projects.features.debugmenu.api)
         }

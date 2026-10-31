@@ -2,7 +2,7 @@ package com.gitub.linkav20.habits.main.api
 
 import com.github.linkav20.habits.core.mvi.navigation.BaseNavigationConfig
 import com.github.linkav20.habits.createitem.api.AddHabitComponent
-import com.github.linkav20.habits.habit.api.HabitComponent
+import com.github.linkav20.habits.habit.api.detail.HabitComponent
 import com.github.linkav20.habits.profile.api.ProfileNavComponent
 import com.github.linkav20.habits.todo.api.TodoComponent
 import com.gitub.linkav20.habits.main.api.main.MainComponent
@@ -20,6 +20,7 @@ sealed interface MainNavigationConfig : BaseNavigationConfig {
         override val screenName: String = "profile"
     }
 
+    @Serializable
     data class ViewHabit(
         val habitId: String,
     ) : MainNavigationConfig {

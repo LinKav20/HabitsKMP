@@ -1,13 +1,13 @@
-package com.github.linkav20.habits.habit.impl.ui
+package com.github.linkav20.habits.habit.impl.ui.detail
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.github.linkav20.habits.core.uikit.components.snackbar.SnackBarNotifier
-import com.github.linkav20.habits.habit.api.HabitComponent
-import com.github.linkav20.habits.habit.api.HabitEvent
-import com.github.linkav20.habits.habit.api.HabitStore
+import com.github.linkav20.habits.habit.api.detail.HabitComponent
+import com.github.linkav20.habits.habit.api.detail.HabitEvent
+import com.github.linkav20.habits.habit.api.detail.HabitStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
@@ -28,7 +28,7 @@ internal class DefaultHabitComponent private constructor(
 
     override fun handleEvent(event: HabitEvent) {
         when (event) {
-            else -> {}
+            HabitEvent.BackClicked -> onBackClick()
         }
     }
 
@@ -41,7 +41,7 @@ internal class DefaultHabitComponent private constructor(
             itemId: String,
             onBackClick: () -> Unit,
         ): HabitComponent {
-            return _root_ide_package_.com.github.linkav20.habits.habit.impl.ui.DefaultHabitComponent(
+            return DefaultHabitComponent(
                 componentContext = componentContext,
                 storeFactory = storeFactory,
                 itemId = itemId,

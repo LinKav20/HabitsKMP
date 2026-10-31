@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.github.linkav20.habits.core.uikit.components.animator.templateBackAnimation
 import com.github.linkav20.habits.createitem.api.AddHabitContent
-import com.github.linkav20.habits.habit.api.HabitContent
+import com.github.linkav20.habits.habit.api.detail.HabitContent
 import com.github.linkav20.habits.profile.api.ProfileNavContent
 import com.github.linkav20.habits.todo.api.TodoContent
 import com.gitub.linkav20.habits.main.api.main.MainContent

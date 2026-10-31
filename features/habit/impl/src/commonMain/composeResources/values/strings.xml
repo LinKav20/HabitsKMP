@@ -1,0 +1,7 @@
+<resources>
+    <string name="habit_list_title">Привычки</string>
+    <string name="habit_list_empty">Пока нет привычек</string>
+    <string name="habit_list_error">Не удалось загрузить привычки</string>
+    <string name="habit_list_retry">Повторить</string>
+    <string name="habit_title">Привычка</string>
+</resources>

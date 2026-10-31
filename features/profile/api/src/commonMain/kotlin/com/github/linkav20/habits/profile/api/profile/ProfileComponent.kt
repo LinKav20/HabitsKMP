@@ -7,6 +7,8 @@ import com.arkivanov.decompose.ComponentContext
 interface ProfileComponent {
     fun onDebugMenuClicked()
 
+    fun onAllHabitsClicked()
+
     fun onBackClicked()
 
     interface Factory {
@@ -14,6 +16,7 @@ interface ProfileComponent {
             componentContext: ComponentContext,
             onBackClick: () -> Unit,
             onDebugMenuClick: () -> Unit,
+            onAllHabitsClick: () -> Unit,
         ): ProfileComponent
     }
 }
